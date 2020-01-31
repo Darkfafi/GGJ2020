@@ -1,9 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Breakable : MonoBehaviour
 {
-	public event Action<State> StateChangedEvent;
+	public delegate void BreakbleStateHandler(Breakable breakable, State newState);
+	public event BreakbleStateHandler StateChangedEvent;
 
 	public enum State
 	{
@@ -14,6 +14,16 @@ public class Breakable : MonoBehaviour
 	public State BreakState
 	{
 		get; private set;
+	}
+
+	protected void Awake()
+	{
+		BreakablesListener.Instance.RegisterBreakable(this);
+	}
+
+	protected void OnDestroy()
+	{
+		BreakablesListener.Instance.UnregisterBreakable(this);
 	}
 
 	public void Break()
@@ -35,7 +45,7 @@ public class Breakable : MonoBehaviour
 	{
 		if(StateChangedEvent != null)
 		{
-			StateChangedEvent(BreakState);
+			StateChangedEvent(this, BreakState);
 		}
 	}
 }
