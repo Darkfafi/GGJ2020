@@ -17,6 +17,11 @@ public class PlayerMovement : MonoBehaviour
 	protected void Awake()
 	{
 		_navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
+
+		if(_playerCamera == null)
+		{
+			_playerCamera = Camera.main;
+		}
 	}
 
     protected void Update()
