@@ -146,4 +146,6 @@ namespace EventObjects
     [Serializable] public class BoolEvent : UnityEvent<bool>{}
     [Serializable] public class IntEvent : UnityEvent<int>{}
     [Serializable] public class FloatEvent : UnityEvent<float>{}
+    
+    [Serializable] public class TransformEvent : UnityEvent<Transform>{}
 }
