@@ -22,7 +22,7 @@ public class BreakableEntity : MonoBehaviour
 		_breakable.StateChangedEvent -= OnBreakableStateChangedEvent;
 	}
 
-	private void OnBreakableStateChangedEvent(Breakable.State state)
+	private void OnBreakableStateChangedEvent(Breakable breakable, Breakable.State state)
 	{
 		switch(state)
 		{
