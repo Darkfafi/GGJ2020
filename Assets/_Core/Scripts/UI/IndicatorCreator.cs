@@ -4,9 +4,9 @@ using UnityEngine;
 public class IndicatorCreator : MonoBehaviour
 {
 	[SerializeField]
-	private IndicationArrow _indicatorPrefab;
+	private ScreenIcon _indicatorPrefab;
 
-	private Dictionary<Breakable, IndicationArrow> _indicators = new Dictionary<Breakable, IndicationArrow>();
+	private Dictionary<Breakable, ScreenIcon> _indicators = new Dictionary<Breakable, ScreenIcon>();
 
 	protected void Awake()
 	{
@@ -20,7 +20,7 @@ public class IndicatorCreator : MonoBehaviour
 
 	private void OnBreakableStateChangedEvent(Breakable breakable, Breakable.State newState)
 	{
-		IndicationArrow arrow = null;
+		ScreenIcon arrow = null;
 		switch (newState)
 		{
 			case Breakable.State.Broken:

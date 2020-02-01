@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 {
     public Image[] exclamationMarks;
     public Image[] wrenches;
+    public Image endScreen;
+    public Image winScreen;
 
     private int currentExclamation;
     private int currentWrench;
@@ -17,6 +19,15 @@ public class GameManager : MonoBehaviour
         NPCCommunicator.Instance.NPCSeenBrokenBreakableEvent += OnShock;
         currentExclamation = 0;
         currentWrench = 0;
+    }
+
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            WrenchActivate();
+        }
     }
 
     private void OnDestroy()
@@ -31,24 +42,43 @@ public class GameManager : MonoBehaviour
 
     private void ExclamationActivate()
     {
-        exclamationMarks[currentExclamation].gameObject.SetActive(true);
-        currentExclamation++;
-        Debug.Log("EXCLAMATION");
-        if (currentExclamation >= exclamationMarks.Length)
+        if (exclamationMarks != null)
         {
-            //stop?
-            Debug.Log("GameOver?");
+            exclamationMarks[currentExclamation].gameObject.SetActive(true);
+            currentExclamation++;
+            Debug.Log("EXCLAMATION");
+            if (currentExclamation > exclamationMarks.Length - 1)
+            {
+                exclamationMarks = null;
+                GameOverScreen();
+            }
         }
     }
 
 
     public void WrenchActivate()
     {
-        wrenches[currentWrench].gameObject.SetActive(true);
-        currentWrench++;
-        if (currentWrench >= wrenches.Length)
+        if (wrenches != null)
         {
-            Debug.Log("You won?");
+            wrenches[currentWrench].gameObject.SetActive(true);
+            currentWrench++;
+            if (currentWrench > wrenches.Length - 1)
+            {
+                wrenches = null;
+                WinScreen();
+            }
         }
+    }
+
+    public void GameOverScreen()
+    {
+        endScreen.gameObject.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
+    public void WinScreen()
+    {
+        winScreen.gameObject.SetActive(true);
+        Time.timeScale = 0f;
     }
 }

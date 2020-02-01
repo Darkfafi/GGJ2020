@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public class NPCCommunicator
 {
     public event NPC.NPCBreakableHandler NPCSeenBrokenBreakableEvent;
+	public event NPC.NPCStateHandler NPCStateSetEvent;
 
 	public static NPCCommunicator Instance
 	{
@@ -35,7 +37,7 @@ public class NPCCommunicator
 		{
 			_npcCollection.Add(npc);
             npc.NPCSeenBrokenBreakableEvent += OnNPCSeenBrokenBreakableEvent;
-
+			npc.NPCStateSetEvent += OnNPCStateSetEvent;
         }
 	}
 
@@ -45,10 +47,19 @@ public class NPCCommunicator
 		{
 			_npcCollection.Remove(npc);
             npc.NPCSeenBrokenBreakableEvent -= OnNPCSeenBrokenBreakableEvent;
-        }
+			npc.NPCStateSetEvent -= OnNPCStateSetEvent;
+		}
 	}
 
-    private void OnNPCSeenBrokenBreakableEvent(NPC npc, Breakable breakableSeen)
+	private void OnNPCStateSetEvent(NPC npc, NPC.State state)
+	{
+		if(NPCStateSetEvent != null)
+		{
+			NPCStateSetEvent(npc, state);
+		}
+	}
+
+	private void OnNPCSeenBrokenBreakableEvent(NPC npc, Breakable breakableSeen)
     {
         if(NPCSeenBrokenBreakableEvent != null)
         {
