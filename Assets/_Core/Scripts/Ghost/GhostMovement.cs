@@ -7,13 +7,7 @@ public class GhostMovement : MonoBehaviour
 {
     public GameObject theObject;
     public Renderer myRenderer;
-    // Start is called before the first frame update
-    void Start()
-    {
-        MoveTowardsObject(theObject);
-    }
-
-    void MoveTowardsObject(GameObject obj)
+    public void MoveTowardsObject(GameObject obj)
     {
         Vector3 diff = obj.transform.position - transform.position;
         myRenderer.material.DOFade(0f, 0.5f).SetEase(Ease.InOutBounce);
