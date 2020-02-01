@@ -55,5 +55,8 @@ public class Checkpoint : MonoBehaviour
 	{
 		Gizmos.color = Color.cyan;
 		Gizmos.DrawWireCube(transform.position + new Vector3(0f, 0.5f, 0f), Vector3.one );
+		Gizmos.color = Color.red;
+		Gizmos.DrawLine(transform.position, transform.position + transform.forward);
+		Gizmos.DrawWireSphere(transform.position + transform.forward, 0.25f);
 	}
 }
