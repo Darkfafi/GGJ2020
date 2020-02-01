@@ -94,7 +94,7 @@ public class CameraBehaviour : MonoBehaviour
     private Transform AlertPlayerTransform;
 
 
-    void Update()
+    void FixedUpdate()
     {
         switch (cameraState)
         {
@@ -128,7 +128,7 @@ public class CameraBehaviour : MonoBehaviour
         {
             FollowAlert(actionLocation);
             timer += Time.deltaTime;
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
         AlertLocation.Reset();
         cameraState = prevState;
@@ -154,7 +154,7 @@ public class CameraBehaviour : MonoBehaviour
             CameraTransform.position = Vector3.Lerp(CameraTransform.position, targetLocation, CameraSpeed * Time.deltaTime);
             
 
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
         FollowingEntityLocation.Reset();
         cameraState = prevState;
