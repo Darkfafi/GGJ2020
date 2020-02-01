@@ -23,8 +23,9 @@ public class Breakable : MonoBehaviour
 
 	protected void Update()
 	{
-		if(Input.GetKeyDown(KeyCode.Space))
+		if(Input.GetKeyDown(KeyCode.B))
 		{
+			Debug.Log("Debug Break, remove later!");
 			Break();
 		}
 	}
