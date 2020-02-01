@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using EventObjects;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public enum CameraState
 {
@@ -21,6 +22,7 @@ public class CameraBehaviour : MonoBehaviour
 
     public Transform PlayerTransform;
     public TransformWithEvent AlertLocation;
+    public TransformWithEvent FollowingEntityLocation;
     
     [Header("Options")]
     public float CameraSpeed = 2f;
@@ -38,12 +40,22 @@ public class CameraBehaviour : MonoBehaviour
             CameraTransform = transform;
         }
         AlertLocation.GetValueAndAddListener(SetAlertLocation);
+        FollowingEntityLocation.GetValueAndAddListener(SetEntityToFollow);
     }
     
     public void SetEntityToFollow(Transform entity)
     {
         FollowEntityTransform = entity;
+        cameraState = CameraState.FollowEntity;
+        FollowingEntityLocation.SetValue(entity);
     }
+
+    public void SetFollowPlayer()
+    {
+        cameraState = CameraState.FollowPlayer;
+    }
+        
+    
     
     public void SetAlertLocation(Transform location)
     {
@@ -75,8 +87,6 @@ public class CameraBehaviour : MonoBehaviour
 
     private Transform AlertPlayerTransform;
 
-    // Update is called once per frame
-  
 
     void Update()
     {
@@ -87,7 +97,7 @@ public class CameraBehaviour : MonoBehaviour
                 break;
             
             case CameraState.FollowEntity:
-                FollowEntity(FollowEntityTransform);
+                FollowEntity(FollowingEntityLocation.Value);
                 break;
         }
     }
