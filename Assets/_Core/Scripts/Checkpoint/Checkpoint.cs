@@ -1,9 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
+	public event Action<Checkpoint, State> CheckpointStateChangedEvent;
+
 	public enum InteractonType
 	{
 		Speech,
@@ -31,8 +32,22 @@ public class Checkpoint : MonoBehaviour
 	[SerializeField]
 	private InteractonType _checkpointInteractionType = InteractonType.Speech;
 
+	protected void Awake()
+	{
+		CheckpointCommunicator.Instance.RegisterCheckpoint(this);
+	}
+
+	protected void OnDestroy()
+	{
+		CheckpointCommunicator.Instance.UnregisterCheckpoint(this);
+	}
+
 	public void SetState(State state)
 	{
 		CheckpointState = state;
+		if(CheckpointStateChangedEvent != null)
+		{
+			CheckpointStateChangedEvent(this, CheckpointState);
+		}
 	}
 }
