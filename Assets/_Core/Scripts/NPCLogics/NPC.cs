@@ -147,15 +147,18 @@ public class NPC : MonoBehaviour
 			{
 				if (hit.collider.gameObject.GetComponent<Breakable>() == _targetBreakable)
 				{
-                    myAnim.SetTrigger("Shock");
-                    _navMeshAgent.isStopped = true;
-                    
-                    if(NPCSeenBrokenBreakableEvent != null)
-                    {
-                        NPCSeenBrokenBreakableEvent(this, _targetBreakable);
-                    }
+					if (_targetBreakable.BreakState == Breakable.State.Broken)
+					{
+						myAnim.SetTrigger("Shock");
+						_navMeshAgent.isStopped = true;
 
-                    yield return new WaitForSeconds(0.8f);
+						if (NPCSeenBrokenBreakableEvent != null)
+						{
+							NPCSeenBrokenBreakableEvent(this, _targetBreakable);
+						}
+
+						yield return new WaitForSeconds(0.8f);
+					}
                     StopNPCCallToBreakable();
 				}
 			}
