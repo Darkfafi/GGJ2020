@@ -18,12 +18,20 @@ public class Breakable : MonoBehaviour
 
 	protected void Awake()
 	{
-		BreakablesListener.Instance.RegisterBreakable(this);
+		BreakablesCommunicator.Instance.RegisterBreakable(this);
+	}
+
+	protected void Update()
+	{
+		if(Input.GetKeyDown(KeyCode.Space))
+		{
+			Break();
+		}
 	}
 
 	protected void OnDestroy()
 	{
-		BreakablesListener.Instance.UnregisterBreakable(this);
+		BreakablesCommunicator.Instance.UnregisterBreakable(this);
 	}
 
 	public void Break()
