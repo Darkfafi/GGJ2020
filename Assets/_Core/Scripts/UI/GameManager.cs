@@ -21,15 +21,6 @@ public class GameManager : MonoBehaviour
         currentWrench = 0;
     }
 
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            WrenchActivate();
-        }
-    }
-
     private void OnDestroy()
     {
         NPCCommunicator.Instance.NPCSeenBrokenBreakableEvent -= OnShock;
