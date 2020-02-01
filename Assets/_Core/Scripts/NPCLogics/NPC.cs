@@ -26,6 +26,8 @@ public class NPC : MonoBehaviour
 	private Coroutine _seeTargetCoroutine = null;
 	private Coroutine _returnToCheckpointRoutine = null;
 
+    private Animator myAnim;
+
 	public float ViewDistance
 	{
 		get
@@ -36,6 +38,7 @@ public class NPC : MonoBehaviour
 
 	protected void Awake()
 	{
+        myAnim = gameObject.GetComponent<Animator>();
 		_navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
 		NPCCommunicator.Instance.RegisterNPC(this);
 	}
@@ -70,7 +73,7 @@ public class NPC : MonoBehaviour
 	{
 		StopNPCCallToBreakable();
 		UnassignFromCheckpoint();
-		NPCState = State.MovingToBreakable;
+        SetState(State.MovingToBreakable);
 		_targetBreakable = targetBreakable;
 		_navMeshAgent.SetDestination(targetBreakable.transform.position);
 		_navMeshAgent.isStopped = false;
@@ -96,9 +99,9 @@ public class NPC : MonoBehaviour
 
 		_targetBreakable = null;
 		_navMeshAgent.isStopped = true;
-		NPCState = State.Idle;
+        SetState(State.Idle);
 
-		if (_currentCheckpoint == null)
+        if (_currentCheckpoint == null)
 		{
 			Checkpoint returningCheckpoint = CheckpointCommunicator.Instance.GetClosestUnsusedCheckpointToAgent(_navMeshAgent);
 			_returnToCheckpointRoutine = StartCoroutine(ReturnToCheckpointRoutine(returningCheckpoint));
@@ -112,6 +115,26 @@ public class NPC : MonoBehaviour
 			Debug.Log("TODO: Do Action " + _currentCheckpoint.CheckpointInteractionType);
 		}
 	}
+
+    private void SetState(State state)
+    {
+        NPCState = state;
+        Debug.Log(NPCState);
+        switch(NPCState)
+        {
+            case State.MovingToBreakable:
+            case State.MovingToCheckpoint:
+
+                myAnim.SetBool("IsWalking", true);
+                // Play Walk Animation <-- I am so proud of you Faf.. <3
+                break;
+
+            case State.Idle:
+                myAnim.SetBool("IsWalking", false);
+                // Play Idle Animation <-- You are the sweetest my Faf
+                break;
+        }
+    }
 	
 	private IEnumerator SeeBreakableRoutine()
 	{
@@ -123,8 +146,10 @@ public class NPC : MonoBehaviour
 				Debug.Log(hit.collider.gameObject.name);
 				if (hit.collider.gameObject.GetComponent<Breakable>() == _targetBreakable)
 				{
-					StopNPCCallToBreakable();
-					Debug.Log("SHOCK!");
+                    myAnim.SetTrigger("Shock");
+                    _navMeshAgent.isStopped = true;
+                    yield return new WaitForSeconds(0.8f);
+                    StopNPCCallToBreakable();
 				}
 			}
 			yield return new WaitForSeconds(0.1f);
@@ -133,19 +158,19 @@ public class NPC : MonoBehaviour
 	}
 
 	private IEnumerator ReturnToCheckpointRoutine(Checkpoint checkpoint)
-	{
-		NPCState = State.MovingToCheckpoint;
+    {
+        SetState(State.MovingToCheckpoint);
 		_navMeshAgent.isStopped = false;
 		_navMeshAgent.velocity = Vector3.zero;
 		_navMeshAgent.SetDestination(checkpoint.transform.position);
 		AssignToCheckpoint(checkpoint, false);
-		while (Vector3.Distance(_navMeshAgent.destination, transform.position) > Mathf.Max(0.5f, _navMeshAgent.stoppingDistance))
-		{
-			yield return null;
+		while (Vector3.Distance(new Vector2(_navMeshAgent.destination.x, _navMeshAgent.destination.z), new Vector2(transform.position.x, transform.position.z)) > Mathf.Max(0.2f, _navMeshAgent.stoppingDistance))
+        {
+            yield return null;
 		}
 		transform.position = new Vector3(checkpoint.transform.position.x, transform.position.y, checkpoint.transform.position.z);
 		DoCheckpointAction();
-		NPCState = State.Idle;
+        SetState(State.Idle);
 		_navMeshAgent.isStopped = true;
 		_returnToCheckpointRoutine = null;
 	}
