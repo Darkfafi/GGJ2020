@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class Checkpoint : MonoBehaviour
+public class Checkpoint : MonoBehaviour, INavMeshTarget
 {
 	public event Action<Checkpoint, State> CheckpointStateChangedEvent;
 
@@ -27,6 +27,11 @@ public class Checkpoint : MonoBehaviour
 		{
 			return _checkpointInteractionType;
 		}
+	}
+
+	public Vector3 GetNavMeshOrigin()
+	{
+		return transform.position;
 	}
 
 	[SerializeField]

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Breakable : MonoBehaviour
+public class Breakable : MonoBehaviour, INavMeshTarget
 {
 	public delegate void BreakbleStateHandler(Breakable breakable, State newState);
 	public event BreakbleStateHandler StateChangedEvent;
@@ -10,6 +10,9 @@ public class Breakable : MonoBehaviour
 		Unbroken,
 		Broken
 	}
+
+	[SerializeField]
+	private Transform _targetTransform;
 
 	public State BreakState
 	{
@@ -24,6 +27,11 @@ public class Breakable : MonoBehaviour
 	protected void OnDestroy()
 	{
 		BreakablesCommunicator.Instance.UnregisterBreakable(this);
+	}
+
+	public Vector3 GetNavMeshOrigin()
+	{
+		return _targetTransform != null ? _targetTransform.position : transform.position;
 	}
 
 	public void Break()

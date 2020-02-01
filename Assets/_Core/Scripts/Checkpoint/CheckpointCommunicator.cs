@@ -42,7 +42,7 @@ public class CheckpointCommunicator
 		Checkpoint checkpoint = null;
 		for(int i = 0; i < _openCheckpoints.Count; i++)
 		{
-			float checkpointDist = agent.CalculateLengthPathToTarget(_openCheckpoints[i].transform.position);
+			float checkpointDist = agent.CalculateLengthPathToTarget(_openCheckpoints[i].GetNavMeshOrigin());
 			if (checkpoint == null || checkpointDist < dist)
 			{
 				checkpoint = _openCheckpoints[i];

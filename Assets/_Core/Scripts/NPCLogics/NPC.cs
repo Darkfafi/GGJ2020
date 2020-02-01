@@ -75,7 +75,7 @@ public class NPC : MonoBehaviour
 		UnassignFromCheckpoint();
         SetState(State.MovingToBreakable);
 		_targetBreakable = targetBreakable;
-		_navMeshAgent.SetDestination(targetBreakable.transform.position);
+		_navMeshAgent.SetDestination(targetBreakable.GetNavMeshOrigin());
 		_navMeshAgent.isStopped = false;
 		_seeTargetCoroutine = StartCoroutine(SeeBreakableRoutine());
 	}
@@ -119,7 +119,6 @@ public class NPC : MonoBehaviour
     private void SetState(State state)
     {
         NPCState = state;
-        Debug.Log(NPCState);
         switch(NPCState)
         {
             case State.MovingToBreakable:
@@ -143,7 +142,6 @@ public class NPC : MonoBehaviour
 			RaycastHit hit;
 			if (Physics.Raycast(transform.position, (_targetBreakable.transform.position - transform.position).normalized, out hit, _viewDistance))
 			{
-				Debug.Log(hit.collider.gameObject.name);
 				if (hit.collider.gameObject.GetComponent<Breakable>() == _targetBreakable)
 				{
                     myAnim.SetTrigger("Shock");

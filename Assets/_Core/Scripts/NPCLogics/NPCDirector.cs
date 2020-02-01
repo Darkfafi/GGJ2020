@@ -67,7 +67,7 @@ public class NPCDirector : MonoBehaviour
 
 			NPCCommunicator.Instance.Loop(npc =>
 			{
-				float distToBreakable = npc.CalculateLengthPathToTarget(breakable.transform.position);
+				float distToBreakable = npc.CalculateLengthPathToTarget(breakable.GetNavMeshOrigin());
 				if ((callingNPC == null || distToBreakable < dist) && npc.NPCState == NPC.State.Idle && distToBreakable > npc.ViewDistance)
 				{
 					callingNPC = npc;
