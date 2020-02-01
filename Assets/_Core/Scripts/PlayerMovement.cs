@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent), typeof(RepairTarget))]
+[RequireComponent(typeof(NavMeshAgent), typeof(RepairTarget), typeof(Animator))]
 public class PlayerMovement : MonoBehaviour
 {
 	[Header("Requirements")]
@@ -43,8 +43,12 @@ public class PlayerMovement : MonoBehaviour
             isWalking = !Mathf.Approximately(Mathf.Abs(hInput) + Mathf.Abs(vInput), 0f);
             if (isWalking)
             {
-                Vector3 xDelta = hInput * Time.deltaTime * _playerCamera.transform.right;
-                Vector3 zDelta = vInput * Time.deltaTime * _playerCamera.transform.forward;
+				Vector3 forward = _playerCamera.transform.forward;
+				forward.y = 0f;
+				forward = Vector3.Normalize(forward);
+				Vector3 right = Quaternion.Euler(new Vector3(0f, 90f, 0f)) * forward;
+                Vector3 xDelta = hInput * Time.deltaTime * right;
+                Vector3 zDelta = vInput * Time.deltaTime * forward;
                 Vector3 finalDelta = (xDelta + zDelta) * _movementSpeed;
                 finalDelta.y = 0f;
                 _navMeshAgent.Move(finalDelta);
