@@ -1,24 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-public class BreakablesListener
+public class BreakablesCommunicator
 {
 	public event Breakable.BreakbleStateHandler BreakableStateChangedEvent;
 
-	public static BreakablesListener Instance
+	public static BreakablesCommunicator Instance
 	{
 		get
 		{
 			if(_instance == null)
 			{
-				_instance = new BreakablesListener();
+				_instance = new BreakablesCommunicator();
 			}
 			return _instance;
 		}
 	}
 
-	private static BreakablesListener _instance = null;
+	private static BreakablesCommunicator _instance = null;
 
 	private List<Breakable> _registeredBreakables = new List<Breakable>();
+
+	public Breakable[] GetBreakables()
+	{
+		return _registeredBreakables.ToArray();
+	}
 
 	public void RegisterBreakable(Breakable breakable)
 	{
