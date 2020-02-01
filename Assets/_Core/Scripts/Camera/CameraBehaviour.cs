@@ -24,14 +24,35 @@ public class CameraBehaviour : MonoBehaviour
     public TransformWithEvent AlertLocation;
     public TransformWithEvent FollowingEntityLocation;
     
-    [Header("Options")]
+    
     public float CameraSpeed = 2f;
-    public float AlertDuration = 2f;
+    
+    [Header("Follow Player Options")]
     [Range(0, 20)]
-    public float FollowOffsetZ = 5f;
+    public float PlayerFollowOffsetZ = 5f;
     
     [Range(0, 20)]
-    public float FollowOffsetY = 5f;
+    public float PlayerFollowOffsetY = 5f;
+    
+    [Header("Alert Options")]
+    public float AlertDuration = 2f;
+    [Range(0, 20)]
+    public float AlertFollowOffsetZ = 5f;
+    
+    [Range(0, 20)]
+    public float AlertFollowOffsetY = 5f;
+    
+    [Header("Follow Entity Options")]
+    [Range(0, 20)]
+    public float EntityFollowOffsetStartOfZoomZ = 2f;
+    [Range(0, 20)]
+    public float EntityFollowOffsetEndOfZoomZ = 2f;
+    [Range(0, 20)]
+    public float EntityFollowOffsetStartOfZoomY = 2f;
+    [Range(0, 20)]
+    public float EntityFollowOffsetEndOfZoomY = 2f;
+
+    [Range(0, 60)] public float ZoomTimeInSeconds = 10;
 
     private void Awake()
     {
@@ -39,15 +60,16 @@ public class CameraBehaviour : MonoBehaviour
         {
             CameraTransform = transform;
         }
+        
         AlertLocation.GetValueAndAddListener(SetAlertLocation);
         FollowingEntityLocation.GetValueAndAddListener(SetEntityToFollow);
     }
     
     public void SetEntityToFollow(Transform entity)
     {
-        FollowEntityTransform = entity;
+        prevState = cameraState;
         cameraState = CameraState.FollowEntity;
-        FollowingEntityLocation.SetValue(entity);
+        StartCoroutine(FollowEntity(FollowingEntityLocation.Value));
     }
 
     public void SetFollowPlayer()
@@ -67,23 +89,6 @@ public class CameraBehaviour : MonoBehaviour
             StartCoroutine(AlertPlayer(AlertPlayerTransform));
         }
     }
-    
-    
-    public Transform FollowEntityTransform
-    {
-        get
-        {
-            return FollowEntityTransform;
-        }
-        set
-        {
-            if (value != null)
-            {
-                FollowEntityTransform = value;
-                cameraState = CameraState.FollowEntity;
-            }
-        }
-    }
 
     private Transform AlertPlayerTransform;
 
@@ -97,7 +102,7 @@ public class CameraBehaviour : MonoBehaviour
                 break;
             
             case CameraState.FollowEntity:
-                FollowEntity(FollowingEntityLocation.Value);
+                
                 break;
         }
     }
@@ -105,13 +110,13 @@ public class CameraBehaviour : MonoBehaviour
 
     void FollowPlayer()
     {
-        Vector3 TargetLocation = PlayerTransform.position + new Vector3(0, FollowOffsetY, FollowOffsetZ);
+        Vector3 TargetLocation = PlayerTransform.position + new Vector3(0, PlayerFollowOffsetY, PlayerFollowOffsetZ);
         CameraTransform.position = Vector3.Lerp(CameraTransform.position, TargetLocation, CameraSpeed * Time.deltaTime);
     }
 
-    void FollowEntity(Transform Entity)
+    void FollowAlert(Transform Entity)
     {
-        Vector3 TargetLocation = Entity.position + new Vector3(0, FollowOffsetY, FollowOffsetZ);
+        Vector3 TargetLocation = Entity.position + new Vector3(0, AlertFollowOffsetY, AlertFollowOffsetZ);
         CameraTransform.position = Vector3.Lerp(CameraTransform.position, TargetLocation, CameraSpeed * Time.deltaTime);
     }
 
@@ -120,11 +125,37 @@ public class CameraBehaviour : MonoBehaviour
         timer = 0;
         while (timer < AlertDuration)
         {
-            FollowEntity(actionLocation);
+            FollowAlert(actionLocation);
             timer += Time.deltaTime;
             yield return null;
         }
         AlertLocation.Reset();
+        cameraState = prevState;
+    }
+
+    IEnumerator FollowEntity(Transform entityLocation)
+    {
+        timer = 0;
+        while (cameraState == CameraState.FollowEntity)
+        {
+            if (timer < ZoomTimeInSeconds)
+            {
+                timer += Time.deltaTime;
+            }
+            
+            Vector3 zoom = new Vector3(
+                0,
+                EntityFollowOffsetStartOfZoomY + (EntityFollowOffsetEndOfZoomY - EntityFollowOffsetStartOfZoomY) * (timer /ZoomTimeInSeconds),
+                EntityFollowOffsetStartOfZoomZ + (EntityFollowOffsetEndOfZoomZ - EntityFollowOffsetStartOfZoomZ) * (timer / ZoomTimeInSeconds)
+            );
+            
+            Vector3 targetLocation = entityLocation.position + zoom;
+            CameraTransform.position = Vector3.Lerp(CameraTransform.position, targetLocation, CameraSpeed * Time.deltaTime);
+            
+
+            yield return null;
+        }
+        FollowingEntityLocation.Reset();
         cameraState = prevState;
     }
 }
