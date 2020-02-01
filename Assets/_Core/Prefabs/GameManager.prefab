@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8136367071851484988}
   - component: {fileID: 8136367071851484989}
   - component: {fileID: 8136367071851484990}
+  - component: {fileID: 962411299}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -25,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8136367071851484991}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.3468628, y: 20.138346, z: 18.946136}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -61,3 +62,25 @@ MonoBehaviour:
   _npcAmount: 5
   _npcPrefab: {fileID: 114027556466854462, guid: 7d4727245b809f34a8be7b2fea2ebb6e,
     type: 3}
+--- !u!114 &962411299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8136367071851484991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddb69ccc37d6d0342b031163e9d6829b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exclamationMarks:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  wrenches:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

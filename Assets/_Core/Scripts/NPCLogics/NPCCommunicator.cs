@@ -2,6 +2,8 @@
 
 public class NPCCommunicator
 {
+    public event NPC.NPCBreakableHandler NPCSeenBrokenBreakableEvent;
+
 	public static NPCCommunicator Instance
 	{
 		get
@@ -32,7 +34,9 @@ public class NPCCommunicator
 		if(!_npcCollection.Contains(npc))
 		{
 			_npcCollection.Add(npc);
-		}
+            npc.NPCSeenBrokenBreakableEvent += OnNPCSeenBrokenBreakableEvent;
+
+        }
 	}
 
 	public void UnregisterNPC(NPC npc)
@@ -40,6 +44,15 @@ public class NPCCommunicator
 		if(_npcCollection.Contains(npc))
 		{
 			_npcCollection.Remove(npc);
-		}
+            npc.NPCSeenBrokenBreakableEvent -= OnNPCSeenBrokenBreakableEvent;
+        }
 	}
+
+    private void OnNPCSeenBrokenBreakableEvent(NPC npc, Breakable breakableSeen)
+    {
+        if(NPCSeenBrokenBreakableEvent != null)
+        {
+            NPCSeenBrokenBreakableEvent(npc, breakableSeen);
+        }
+    }
 }

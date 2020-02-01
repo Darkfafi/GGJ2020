@@ -5,7 +5,10 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class NPC : MonoBehaviour
 {
-	public enum State
+    public delegate void NPCBreakableHandler(NPC npc, Breakable breakableSeen);
+    public event NPCBreakableHandler NPCSeenBrokenBreakableEvent;
+
+    public enum State
 	{
 		Idle,
 		MovingToBreakable,
@@ -146,6 +149,12 @@ public class NPC : MonoBehaviour
 				{
                     myAnim.SetTrigger("Shock");
                     _navMeshAgent.isStopped = true;
+                    
+                    if(NPCSeenBrokenBreakableEvent != null)
+                    {
+                        NPCSeenBrokenBreakableEvent(this, _targetBreakable);
+                    }
+
                     yield return new WaitForSeconds(0.8f);
                     StopNPCCallToBreakable();
 				}

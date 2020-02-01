@@ -15,6 +15,8 @@ public class MiniGame : MonoBehaviour
     public GameObject countContainer;
     public Image nodePrefab;
 
+    public GameManager gameManager;
+
     [SerializeField]
     private int maxCounter = 4;
 
@@ -22,6 +24,10 @@ public class MiniGame : MonoBehaviour
     private Keys randomKey;
 	private MiniGameFinishHandler _endCallback;
 
+    private void Awake()
+    {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
     private void Update()
     {
         if (randomKey != null)
@@ -44,6 +50,8 @@ public class MiniGame : MonoBehaviour
                 counter++;
                 currentRepairNode++;
                 ChangeNodeColour();
+                
+                //wrench
                 if (counter >= maxCounter)
                 {
                     StopMiniGame(true);
@@ -92,8 +100,10 @@ public class MiniGame : MonoBehaviour
 			{
 				MiniGameFinishHandler cb = _endCallback;
 				_endCallback = null;
-				cb(success);
-			}
+                gameManager.WrenchActivate();
+                cb(success);
+                
+            }
         }
     }
 
