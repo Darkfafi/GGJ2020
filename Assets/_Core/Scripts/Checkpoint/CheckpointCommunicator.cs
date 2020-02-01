@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class CheckpointCommunicator
 {
@@ -35,13 +36,13 @@ public class CheckpointCommunicator
 		return _openCheckpoints[UnityEngine.Random.Range(0, _openCheckpoints.Count)];
 	}
 
-	public Checkpoint GetClosestUnsusedCheckpointToNPC(NPC npc)
+	public Checkpoint GetClosestUnsusedCheckpointToAgent(NavMeshAgent agent)
 	{
 		float dist = 0f;
 		Checkpoint checkpoint = null;
 		for(int i = 0; i < _openCheckpoints.Count; i++)
 		{
-			float checkpointDist = npc.CalculateLengthPathToTarget(_openCheckpoints[i].transform.position);
+			float checkpointDist = agent.CalculateLengthPathToTarget(_openCheckpoints[i].transform.position);
 			if (checkpoint == null || checkpointDist < dist)
 			{
 				checkpoint = _openCheckpoints[i];

@@ -77,6 +77,11 @@ public class NPC : MonoBehaviour
 		_seeTargetCoroutine = StartCoroutine(SeeBreakableRoutine());
 	}
 
+	public float CalculateLengthPathToTarget(Vector3 target)
+	{
+		return _navMeshAgent.CalculateLengthPathToTarget(target);
+	}
+
 	public void StopNPCCallToBreakable()
 	{
 		if(_seeTargetCoroutine != null)
@@ -95,32 +100,9 @@ public class NPC : MonoBehaviour
 
 		if (_currentCheckpoint == null)
 		{
-			Checkpoint returningCheckpoint = CheckpointCommunicator.Instance.GetClosestUnsusedCheckpointToNPC(this);
+			Checkpoint returningCheckpoint = CheckpointCommunicator.Instance.GetClosestUnsusedCheckpointToAgent(_navMeshAgent);
 			_returnToCheckpointRoutine = StartCoroutine(ReturnToCheckpointRoutine(returningCheckpoint));
 		}
-	}
-
-	public float CalculateLengthPathToTarget(Vector3 target)
-	{
-		NavMeshPath path = CalculatePathToTarget(target);
-		float lengthPath = 0f;
-
-		if(path.corners.Length > 0)
-		{
-			lengthPath += Vector3.Distance(transform.position, path.corners[0]);
-			lengthPath += Vector3.Distance(path.corners[0], target);
-		}
-
-		if (path.corners.Length > 1 && path.status != NavMeshPathStatus.PathInvalid)
-		{
-			for (int i = 0; i < path.corners.Length - 2; i++)
-			{
-				Vector3 currentCorner = path.corners[i];
-				Vector3 nextCorner = path.corners[i + 1];
-				lengthPath += Vector3.Distance(currentCorner, nextCorner);
-			}
-		}
-		return lengthPath;
 	}
 
 	private void DoCheckpointAction()
@@ -129,13 +111,6 @@ public class NPC : MonoBehaviour
 		{
 			Debug.Log("TODO: Do Action " + _currentCheckpoint.CheckpointInteractionType);
 		}
-	}
-
-	private NavMeshPath CalculatePathToTarget(Vector3 target)
-	{
-		NavMeshPath path = new NavMeshPath();
-		_navMeshAgent.CalculatePath(target, path);
-		return path;
 	}
 	
 	private IEnumerator SeeBreakableRoutine()

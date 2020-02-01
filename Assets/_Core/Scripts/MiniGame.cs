@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class MiniGame : MonoBehaviour
 {
+	public delegate void MiniGameFinishHandler(bool successful);
+
     public Keys[] miniGameKeys;
     public Image currentKeyImage;
 
@@ -19,13 +20,9 @@ public class MiniGame : MonoBehaviour
 
     private int counter;
     private Keys randomKey;
+	private MiniGameFinishHandler _endCallback;
 
-    void Start()
-    {
-        StartMiniGame();
-    }
-
-    void Update()
+    private void Update()
     {
         if (randomKey != null)
         {
@@ -49,7 +46,7 @@ public class MiniGame : MonoBehaviour
                 ChangeNodeColour();
                 if (counter >= maxCounter)
                 {
-                    StopMiniGame();
+                    StopMiniGame(true);
                 }
             }
             else
@@ -58,30 +55,28 @@ public class MiniGame : MonoBehaviour
                 {
                     if (Input.GetKeyDown(miniGameKeys[i].keycode))
                     {
-                        StartMiniGame();
+						MiniGameFinishHandler callback = _endCallback;
+						_endCallback = null;
+                        StartMiniGame(callback);
                         break;
                     }
                 }
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartMiniGame();
-        }
     }
 
-    public void StartMiniGame()
+    public void StartMiniGame(MiniGameFinishHandler endCallback)
     {
-        StopMiniGame();
-        counter = 0;
+        StopMiniGame(false);
+		_endCallback = endCallback;
+		counter = 0;
         currentRepairNode = -1;
         miniGameContainer.SetActive(true);
         GenerateRepairNodes();
         SelectRandomKey();
     }
 
-    public void StopMiniGame()
+    public void StopMiniGame(bool success)
     {
         miniGameContainer.SetActive(false);
         randomKey = null;
@@ -92,6 +87,13 @@ public class MiniGame : MonoBehaviour
                 Destroy(repairNodes[i].gameObject);
             }
             repairNodes = null;
+
+			if(_endCallback != null)
+			{
+				MiniGameFinishHandler cb = _endCallback;
+				_endCallback = null;
+				cb(success);
+			}
         }
     }
 
@@ -109,12 +111,12 @@ public class MiniGame : MonoBehaviour
             repairNodes[i] = Instantiate(nodePrefab, countContainer.transform);
         }
     }
-    private void SelectRandomKey()
+
+	private void SelectRandomKey()
     {
         int rand = Random.Range(0, miniGameKeys.Length);
         randomKey = miniGameKeys[rand];
         currentKeyImage.sprite = randomKey.sprite;
-
     }
 
     [System.Serializable]

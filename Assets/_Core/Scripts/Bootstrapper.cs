@@ -7,8 +7,14 @@ public class Bootstrapper : MonoBehaviour
 	[SerializeField]
 	private NPCDirector _npcDirector;
 
+	[SerializeField]
+	private bool _activateNPCsOnStart = true;
+
 	protected void Start()
 	{
-		_npcDirector.SetDirectorState(NPCDirector.State.Active);
+		if (_activateNPCsOnStart)
+		{
+			_npcDirector.SetDirectorState(NPCDirector.State.Active);
+		}
 	}
 }
