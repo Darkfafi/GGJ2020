@@ -26,6 +26,7 @@ public class CameraBehaviour : MonoBehaviour
     
     
     public float CameraSpeed = 2f;
+    public float CameraPlayerSpeed = 5f;
     
     [Header("Follow Player Options")]
     [Range(0, 20)]
@@ -111,7 +112,7 @@ public class CameraBehaviour : MonoBehaviour
     void FollowPlayer()
     {
         Vector3 TargetLocation = PlayerTransform.position + new Vector3(0, PlayerFollowOffsetY, PlayerFollowOffsetZ);
-        CameraTransform.position = Vector3.Lerp(CameraTransform.position, TargetLocation, CameraSpeed * Time.deltaTime);
+        CameraTransform.position = Vector3.Lerp(CameraTransform.position, TargetLocation, CameraPlayerSpeed * Time.deltaTime);
     }
 
     void FollowAlert(Transform Entity)
