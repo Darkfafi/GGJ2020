@@ -21,15 +21,6 @@ public class Breakable : MonoBehaviour
 		BreakablesCommunicator.Instance.RegisterBreakable(this);
 	}
 
-	protected void Update()
-	{
-		if(Input.GetKeyDown(KeyCode.B))
-		{
-			Debug.Log("Debug Break, remove later!");
-			Break();
-		}
-	}
-
 	protected void OnDestroy()
 	{
 		BreakablesCommunicator.Instance.UnregisterBreakable(this);
