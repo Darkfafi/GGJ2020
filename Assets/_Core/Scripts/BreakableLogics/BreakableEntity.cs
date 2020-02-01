@@ -10,12 +10,8 @@ public class BreakableEntity : MonoBehaviour
 	{
 		_breakable = gameObject.GetComponent<Breakable>();
 		_outlineAnimator = gameObject.GetComponent<OutlineAnimator>();
-	}
-
-	protected void Start()
-	{
-		_breakable.StateChangedEvent += OnBreakableStateChangedEvent;
-	}
+        _breakable.StateChangedEvent += OnBreakableStateChangedEvent;
+    }
 
 	protected void OnDestroy()
 	{
