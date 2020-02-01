@@ -50,4 +50,10 @@ public class Checkpoint : MonoBehaviour
 			CheckpointStateChangedEvent(this, CheckpointState);
 		}
 	}
+
+	private void OnDrawGizmos()
+	{
+		Gizmos.color = Color.cyan;
+		Gizmos.DrawWireCube(transform.position + new Vector3(0f, 0.5f, 0f), Vector3.one );
+	}
 }

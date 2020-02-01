@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
 		float hInput = Input.GetAxis("Horizontal");
 		float vInput = Input.GetAxis("Vertical");
 
-		if(!Mathf.Approximately(hInput + vInput, 0f))
+		if(!Mathf.Approximately(Mathf.Abs(hInput) + Mathf.Abs(vInput), 0f))
 		{
 			Vector3 xDelta = hInput * Time.deltaTime * _playerCamera.transform.right;
 			Vector3 zDelta = vInput * Time.deltaTime * _playerCamera.transform.forward;
