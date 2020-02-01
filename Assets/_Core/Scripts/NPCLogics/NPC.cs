@@ -6,7 +6,9 @@ using UnityEngine.AI;
 public class NPC : MonoBehaviour
 {
     public delegate void NPCBreakableHandler(NPC npc, Breakable breakableSeen);
+	public delegate void NPCStateHandler(NPC npc, State state);
     public event NPCBreakableHandler NPCSeenBrokenBreakableEvent;
+	public event NPCStateHandler NPCStateSetEvent;
 
     public enum State
 	{
@@ -136,6 +138,11 @@ public class NPC : MonoBehaviour
                 // Play Idle Animation <-- You are the sweetest my Faf
                 break;
         }
+
+		if(NPCStateSetEvent != null)
+		{
+			NPCStateSetEvent(this, NPCState);
+		}
     }
 	
 	private IEnumerator SeeBreakableRoutine()
