@@ -47,9 +47,9 @@ public class PlayerMovement : MonoBehaviour
 				forward.y = 0f;
 				forward = Vector3.Normalize(forward);
 				Vector3 right = Quaternion.Euler(new Vector3(0f, 90f, 0f)) * forward;
-                Vector3 xDelta = hInput * Time.deltaTime * right;
-                Vector3 zDelta = vInput * Time.deltaTime * forward;
-                Vector3 finalDelta = (xDelta + zDelta) * _movementSpeed;
+                Vector3 xDelta = hInput * right;
+                Vector3 zDelta = vInput * forward;
+                Vector3 finalDelta = (xDelta + zDelta).normalized * Time.deltaTime * _movementSpeed;
                 finalDelta.y = 0f;
                 _navMeshAgent.Move(finalDelta);
                 Quaternion tRot = Quaternion.LookRotation(finalDelta, transform.up);
