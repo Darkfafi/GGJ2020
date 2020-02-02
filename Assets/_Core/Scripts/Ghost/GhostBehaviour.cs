@@ -1,7 +1,6 @@
-﻿using System;
+﻿using DG.Tweening;
 using System.Collections;
 using UnityEngine;
-using DG.Tweening;
 
 public class GhostBehaviour : MonoBehaviour
 {
@@ -69,6 +68,7 @@ public class GhostBehaviour : MonoBehaviour
 		{
 			StopAllCoroutines();
 			_anim.SetBool(BreakAnimString, false);
+			transform.DOKill();
 			transform.DOShakeScale(1f, 0.5f, 5).SetDelay(0.5f).OnComplete(() => 
 			{
 				FindRandomObject();

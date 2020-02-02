@@ -133,7 +133,7 @@ public class NPC : MonoBehaviour
 	{
 		if(_currentCheckpoint != null)
 		{
-			Debug.Log("TODO: Do Action " + _currentCheckpoint.CheckpointInteractionType);
+			//Debug.Log("TODO: Do Action " + _currentCheckpoint.CheckpointInteractionType);
 		}
 	}
 
