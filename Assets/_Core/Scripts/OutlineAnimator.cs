@@ -12,6 +12,7 @@ public class OutlineAnimator : MonoBehaviour
 
 	private Outline3D _outline3D;
 	private Coroutine _animationRoutine;
+	private Color _originalColor;
 
 	public bool IsAnimating
 	{
@@ -24,6 +25,7 @@ public class OutlineAnimator : MonoBehaviour
     protected void Awake()
 	{
 		_outline3D = gameObject.GetComponent<Outline3D>();
+		_originalColor = _outline3D.OutlineColor;
 		StopOutlineAnimation();
 	}
 
@@ -31,6 +33,16 @@ public class OutlineAnimator : MonoBehaviour
 	{
 		StopOutlineAnimation();
 		_animationRoutine = StartCoroutine(OutlineAnimationRoutine());
+	}
+
+	public void SetOutlineColor(Color color)
+	{
+		_outline3D.OutlineColor = color;
+	}
+
+	public void ResetOutlineColor()
+	{
+		_outline3D.OutlineColor = _originalColor;
 	}
 
 	public void StopOutlineAnimation()

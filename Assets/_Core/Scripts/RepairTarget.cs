@@ -17,7 +17,6 @@ public class RepairTarget : MonoBehaviour
 	[SerializeField]
 	private Color _highlightColor;
 
-	private Color _originalClosestBreakableColor;
 	private Breakable _closestBreakable;
 	private bool _setColor = false;
 
@@ -31,7 +30,7 @@ public class RepairTarget : MonoBehaviour
 			{
 				if (!_setColor)
 				{
-					_closestBreakable.GetComponent<Outline3D>().OutlineColor = _highlightColor;
+					_closestBreakable.GetComponent<BreakableEntity>().OutlineAnimator.SetOutlineColor(_highlightColor);
 					_setColor = true;
 				}
 				if (Input.GetKeyDown(KeyCode.Space))
@@ -57,7 +56,7 @@ public class RepairTarget : MonoBehaviour
 			}
 			else if (_setColor)
 			{
-				_closestBreakable.GetComponent<Outline3D>().OutlineColor = _originalClosestBreakableColor;
+				_closestBreakable.GetComponent<BreakableEntity>().OutlineAnimator.ResetOutlineColor();
 				_setColor = false;
 			}
 		}
@@ -79,7 +78,6 @@ public class RepairTarget : MonoBehaviour
 		{
 			ClearClosestBreakableEntry();
 			_closestBreakable = breakable;
-			_originalClosestBreakableColor = _closestBreakable.GetComponent<Outline3D>().OutlineColor;
 		}
 	}
 
@@ -92,7 +90,7 @@ public class RepairTarget : MonoBehaviour
 	{
 		if (_closestBreakable != null)
 		{
-			_closestBreakable.GetComponent<Outline3D>().OutlineColor = _originalClosestBreakableColor;
+			_closestBreakable.GetComponent<BreakableEntity>().OutlineAnimator.ResetOutlineColor();
 			_setColor = false;
 			_closestBreakable = null;
 		}
