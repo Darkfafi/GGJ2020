@@ -18,6 +18,11 @@ public class MiniGame : MonoBehaviour
 
     public GameManager gameManager;
 
+    private AudioSource _audio;
+    public AudioClip buttonPressSFX;
+    public AudioClip finishedGameSFX;
+    public AudioClip wrongSFX;
+
 	public bool IsMinigameActive
 	{
 		get
@@ -35,6 +40,7 @@ public class MiniGame : MonoBehaviour
 
     private void Awake()
     {
+        _audio = GetComponent<AudioSource>();
         gameManager = FindObjectOfType<GameManager>();
     }
 
@@ -44,6 +50,7 @@ public class MiniGame : MonoBehaviour
         {
             if (Input.GetKey(randomKey.keycode))
             {
+                _audio.PlayOneShot(buttonPressSFX);
                 Keys preKey = randomKey;
                 if (miniGameKeys.Length > 2)
                 {
@@ -78,6 +85,7 @@ public class MiniGame : MonoBehaviour
                     {
 						MiniGameFinishHandler callback = _endCallback;
 						_endCallback = null;
+                        _audio.PlayOneShot(wrongSFX);
                         StartMiniGame(callback);
                         break;
                     }
@@ -118,6 +126,7 @@ public class MiniGame : MonoBehaviour
 				_endCallback = null;
 				if(success)
 				{
+                    _audio.PlayOneShot(finishedGameSFX);
 					gameManager.WrenchActivate();
 				}
                 cb(success);
