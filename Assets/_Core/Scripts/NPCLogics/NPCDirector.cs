@@ -39,6 +39,11 @@ public class NPCDirector : MonoBehaviour
 		}
 	}
 
+	protected void OnDestroy()
+	{
+		SetDirectorState(State.Deactive);
+	}
+
 	public void SetDirectorState(State state)
 	{
 		if(DirectorState == state)
