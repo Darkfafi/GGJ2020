@@ -166,7 +166,7 @@ public class NPC : MonoBehaviour
 		while(_targetBreakable != null)
 		{
 			RaycastHit hit;
-			if (Physics.Raycast(transform.position, (_targetBreakable.transform.position - transform.position).normalized, out hit, _viewDistance))
+			if (Physics.Raycast(transform.position, (_targetBreakable.transform.position - transform.position).normalized, out hit, _viewDistance, ~(1 << 9)))
 			{
 				if (hit.collider.gameObject.GetComponent<Breakable>() == _targetBreakable)
 				{

@@ -7,13 +7,17 @@ using UnityEngine.UI;
 
 
 public class PauseMenu : MonoBehaviour
-{ 
+{
     private bool GameIsPaused = false;
-    public Image pauseMenuUI;
+    private Image pauseMenuUI;
+    private Image endScreen;
+    private Image winScreen;
 
     private void Awake()
     {
         pauseMenuUI = GameObject.Find("PauseMenu").GetComponent<Image>();
+        endScreen = GameObject.Find("EndScreen").GetComponent<Image>();
+        winScreen = GameObject.Find("WinScreen").GetComponent<Image>();
         pauseMenuUI.gameObject.SetActive(false);
     }
     void Update()
@@ -29,7 +33,7 @@ public class PauseMenu : MonoBehaviour
                 Pause();
             }
         }
-        if (pauseMenuUI.gameObject.activeSelf)
+        if (pauseMenuUI.gameObject.activeSelf || endScreen.gameObject.activeSelf || winScreen.gameObject.activeSelf)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {

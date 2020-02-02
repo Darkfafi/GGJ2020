@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 195175682830769922}
   - component: {fileID: 114027556466854462}
   - component: {fileID: 6731613472682313384}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: NPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 5853301193034823731}
   - component: {fileID: 5853301193031399443}
   - component: {fileID: 5853301193032399571}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: leg_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 5853301193034823735}
   - component: {fileID: 5853301193031399441}
   - component: {fileID: 5853301193032399569}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 5853301193034823737}
   - component: {fileID: 5853301193031399449}
   - component: {fileID: 5853301193032399577}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: arm_right1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,7 +330,7 @@ GameObject:
   - component: {fileID: 5853301193034823739}
   - component: {fileID: 5853301193031399451}
   - component: {fileID: 5853301193032399579}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: arm_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -407,7 +407,7 @@ GameObject:
   - component: {fileID: 5853301193034823741}
   - component: {fileID: 5853301193031399453}
   - component: {fileID: 5853301193032399581}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: leg_left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -484,7 +484,7 @@ GameObject:
   - component: {fileID: 5853301193034823743}
   - component: {fileID: 5853301193031399455}
   - component: {fileID: 5853301193032399583}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -559,7 +559,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1632718063481537251}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}

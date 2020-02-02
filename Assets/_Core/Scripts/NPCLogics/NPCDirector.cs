@@ -62,18 +62,18 @@ public class NPCDirector : MonoBehaviour
 	{
 		if (newState == Breakable.State.Broken)
 		{
-			float dist = 0f;
 			NPC callingNPC = null;
+			NPC[] npcs = NPCCommunicator.Instance.GetNPCs(x => x.NPCState == NPC.State.Idle);
+			System.Array.Sort(npcs, (a, b) => (int)(a.CalculateLengthPathToTarget(breakable.GetNavMeshOrigin()) - b.CalculateLengthPathToTarget(breakable.GetNavMeshOrigin())));
 
-			NPCCommunicator.Instance.Loop(npc =>
+			if(npcs.Length > 1)
 			{
-				float distToBreakable = npc.CalculateLengthPathToTarget(breakable.GetNavMeshOrigin());
-				if ((callingNPC == null || distToBreakable < dist) && npc.NPCState == NPC.State.Idle && distToBreakable > npc.ViewDistance)
-				{
-					callingNPC = npc;
-					dist = distToBreakable;
-				}
-			});
+				callingNPC = npcs[Mathf.FloorToInt(npcs.Length / 2f)];
+			}
+			else if(npcs.Length == 1)
+			{
+				callingNPC = npcs[0];
+			}
 
 			if (callingNPC != null)
 			{
