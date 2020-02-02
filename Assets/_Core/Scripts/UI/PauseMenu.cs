@@ -17,14 +17,11 @@ public class PauseMenu : MonoBehaviour
 	[SerializeField]
 	private Image _winScreen;
 
-    private AudioSource _audio;
-    public AudioClip winSFX;
-    public AudioClip LoseSFX;
 
     private void Awake()
     {
 		_pauseMenu.gameObject.SetActive(false);
-        _audio = GetComponent<AudioSource>();
+  
 
 	}
     void Update()
@@ -46,14 +43,6 @@ public class PauseMenu : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Reset();
-            }
-            if (_endScreen.gameObject.activeSelf)
-            {
-                _audio.PlayOneShot(LoseSFX);
-            }
-            if (_winScreen.gameObject.activeSelf)
-            {
-                _audio.PlayOneShot(winSFX);
             }
         }
     }

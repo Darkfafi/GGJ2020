@@ -1137,9 +1137,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57b04bc9360b22c47b80afb82c3f6296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bgmController: {fileID: 0}
   _pauseMenu: {fileID: 9001020965154126677}
   _endScreen: {fileID: 778862352346298210}
   _winScreen: {fileID: 3066248256531218103}
+  winSFX: {fileID: 8300000, guid: d624d2cd2d4e9c248bbce3ad072bcc8f, type: 3}
+  LoseSFX: {fileID: 8300000, guid: 6ae5c0645dddde349a867a7823f74d67, type: 3}
 --- !u!1 &5450237647130618121
 GameObject:
   m_ObjectHideFlags: 0
