@@ -17,9 +17,11 @@ public class PauseMenu : MonoBehaviour
 	[SerializeField]
 	private Image _winScreen;
 
+
     private void Awake()
     {
 		_pauseMenu.gameObject.SetActive(false);
+  
 
 	}
     void Update()
@@ -37,6 +39,7 @@ public class PauseMenu : MonoBehaviour
         }
         if (_pauseMenu.gameObject.activeSelf || _endScreen.gameObject.activeSelf || _winScreen.gameObject.activeSelf)
         {
+            
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Reset();

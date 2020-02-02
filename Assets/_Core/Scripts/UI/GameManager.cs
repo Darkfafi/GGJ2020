@@ -14,9 +14,15 @@ public class GameManager : MonoBehaviour
 
     private int currentExclamation;
     private int currentWrench;
+
+
+    private AudioSource _audio;
+    public AudioClip winSFX;
+    public AudioClip LoseSFX;
     // Start is called before the first frame update
     private void Awake()
     {
+        _audio = GetComponent<AudioSource>();
         _endScreen.gameObject.SetActive(false);
         _winScreen.gameObject.SetActive(false);
         NPCCommunicator.Instance.NPCSeenBrokenBreakableEvent += OnShock;
@@ -68,12 +74,14 @@ public class GameManager : MonoBehaviour
     public void GameOverScreen()
     {
         _endScreen.gameObject.SetActive(true);
+        _audio.PlayOneShot(LoseSFX);
         Time.timeScale = 0f;
     }
 
     public void WinScreen()
     {
         _winScreen.gameObject.SetActive(true);
+        _audio.PlayOneShot(winSFX);
         Time.timeScale = 0f;
     }
 }

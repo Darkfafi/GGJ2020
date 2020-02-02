@@ -1141,6 +1141,8 @@ MonoBehaviour:
   _pauseMenu: {fileID: 9001020965154126677}
   _endScreen: {fileID: 778862352346298210}
   _winScreen: {fileID: 3066248256531218103}
+  winSFX: {fileID: 8300000, guid: d624d2cd2d4e9c248bbce3ad072bcc8f, type: 3}
+  LoseSFX: {fileID: 8300000, guid: 6ae5c0645dddde349a867a7823f74d67, type: 3}
 --- !u!1 &5450237647130618121
 GameObject:
   m_ObjectHideFlags: 0
