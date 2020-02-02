@@ -18,6 +18,12 @@ ModelImporter:
     400010: //RootNode
     400012: torso
     2100000: lambert1
+    2100002: player_head
+    2100004: player_torso
+    2100006: player_Rleg
+    2100008: player_Lleg
+    2100010: player_Rarm
+    2100012: player_Larm
     2300000: arm_right
     2300002: arm_right1
     2300004: head
