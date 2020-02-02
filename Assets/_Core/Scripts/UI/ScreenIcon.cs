@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(RectTransform))]
-public class IndicationArrow : MonoBehaviour
+public class ScreenIcon : MonoBehaviour
 {
-
 	[SerializeField]
 	private GameObject _iconContainer;
+
+	[SerializeField]
+	private bool _inScreenIndication = true;
+
+	[SerializeField]
+	private Vector2 _offsetInScreenIndication = Vector2.zero;
 
 	private Camera _camera;
 	private Canvas _canvas;
@@ -14,7 +19,6 @@ public class IndicationArrow : MonoBehaviour
 	private Transform _relativeOrigin;
 
 	private Transform _currentTarget;
-	private Vector2 _uiOffset;
 
 	protected void Awake()
 	{
@@ -24,7 +28,6 @@ public class IndicationArrow : MonoBehaviour
 		_relativeOrigin = FindObjectOfType<PlayerMovement>().transform;
 
 		_rectTransform = GetComponent<RectTransform>();
-		_uiOffset = new Vector2(_canvasRect.sizeDelta.x / 2f, _canvasRect.sizeDelta.y / 2f);
 	}
 
 	protected void Update()
@@ -32,17 +35,24 @@ public class IndicationArrow : MonoBehaviour
 		if (_currentTarget != null)
 		{
 			Vector2 viewportPos = _camera.WorldToViewportPoint(_currentTarget.transform.position);
-			if ((viewportPos.x >= 0 && viewportPos.x <= 1) && (viewportPos.y >= 0 && viewportPos.y <= 1))
+			if((viewportPos.x >= 0 && viewportPos.x <= 1) && (viewportPos.y >= 0 && viewportPos.y <= 1))
 			{
-				_rectTransform.anchoredPosition = Vector2.zero;
-				_iconContainer.SetActive(false);
-				return;
-			}
-			else
-			{
-				_iconContainer.SetActive(true);
+				if(_inScreenIndication)
+				{
+					Vector2 finalScreenPos = new Vector2((viewportPos.x * _canvasRect.sizeDelta.x) - (_canvasRect.sizeDelta.x * 0.5f),
+							(viewportPos.y * _canvasRect.sizeDelta.y) - (_canvasRect.sizeDelta.y * 0.5f)) + _offsetInScreenIndication;
+					_rectTransform.anchoredPosition = finalScreenPos;
+					return;
+				}
+				else
+				{
+					_rectTransform.anchoredPosition = Vector2.zero;
+					_iconContainer.SetActive(false);
+					return;
+				}
 			}
 
+			_iconContainer.SetActive(true);
 			Vector3 relativePosDir = (_relativeOrigin.transform.position - _currentTarget.transform.position).normalized;
 			bool xLock = Mathf.Abs(relativePosDir.x) >= Mathf.Abs(relativePosDir.z);
 			relativePosDir.x = xLock ? relativePosDir.x / Mathf.Abs(relativePosDir.x) : relativePosDir.x;
