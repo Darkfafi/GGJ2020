@@ -107,7 +107,8 @@ public class MiniGame : MonoBehaviour
         {
             for (int i = 0; i < repairNodes.Length; i++)
             {
-                Destroy(repairNodes[i].gameObject);
+				repairNodes[i].transform.DOKill();
+				Destroy(repairNodes[i].gameObject);
             }
             repairNodes = null;
 
@@ -151,6 +152,7 @@ public class MiniGame : MonoBehaviour
 	{
 		t.localScale = Vector3.one * 0.15f;
 		t.DOComplete(true);
+		t.DOKill();
 		t.DOScale(1f, 0.4f).SetEase(Ease.OutBack);
 	}
 
