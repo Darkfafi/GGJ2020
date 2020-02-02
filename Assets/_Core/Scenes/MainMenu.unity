@@ -552,7 +552,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -2041,5 +2041,7 @@ MonoBehaviour:
   waitTimeStart: 5
   waitTimeBetweenBreakingMin: 10
   waitTimeBetweenBreakingMax: 20
-  theObject: {fileID: 0}
+  movingSFX: {fileID: 0}
+  upsetSFX: {fileID: 0}
+  breakingSFX: {fileID: 0}
   BreakAnimString: Breaking
