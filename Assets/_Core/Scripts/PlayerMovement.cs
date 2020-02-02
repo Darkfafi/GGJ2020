@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     protected void Update()
     {
         bool isWalking = false;
-        if (_canMove)
+        if (_canMove && !Mathf.Approximately(Time.timeScale, 0f))
         {
             float hInput = Input.GetAxis("Horizontal");
             float vInput = Input.GetAxis("Vertical");
