@@ -87,6 +87,9 @@ public class NPC : MonoBehaviour
 		if(setToCheckpointPos)
 		{
 			transform.position = _currentCheckpoint.transform.position;
+			Vector3 rot = transform.eulerAngles;
+			rot.y = checkpoint.transform.eulerAngles.y;
+			transform.eulerAngles = rot;
 			DoCheckpointAction();
 		}
 	}
@@ -220,6 +223,9 @@ public class NPC : MonoBehaviour
             yield return null;
 		}
 		transform.position = new Vector3(checkpoint.transform.position.x, transform.position.y, checkpoint.transform.position.z);
+		Vector3 rot = transform.eulerAngles;
+		rot.y = checkpoint.transform.eulerAngles.y;
+		transform.eulerAngles = rot;
 		DoCheckpointAction();
         SetState(State.Idle);
 		_navMeshAgent.isStopped = true;
