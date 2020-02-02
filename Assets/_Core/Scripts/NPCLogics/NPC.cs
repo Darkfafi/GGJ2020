@@ -174,7 +174,7 @@ public class NPC : MonoBehaviour
 					{
 						myAnim.SetTrigger("Shock");
 						_navMeshAgent.isStopped = true;
-
+						_targetBreakable.PermanentlyBreak();
 						if (NPCSeenBrokenBreakableEvent != null)
 						{
 							NPCSeenBrokenBreakableEvent(this, _targetBreakable);

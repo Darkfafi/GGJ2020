@@ -23,40 +23,47 @@ public class RepairTarget : MonoBehaviour
 
 	protected void Update()
 	{
-		RegisterClosestBreakable();
-
-		if(IsValidBreakableInRange(_closestBreakable) && !_miniGame.IsMinigameActive)
+		if (!_miniGame.IsMinigameActive)
 		{
-			if(!_setColor)
+			RegisterClosestBreakable();
+
+			if (IsValidBreakableInRange(_closestBreakable))
 			{
-				_closestBreakable.GetComponent<Outline3D>().OutlineColor = _highlightColor;
-				_setColor = true;
-			}
-			if (Input.GetKeyDown(KeyCode.Space))
-			{
-				if(StartedRepairingBreakableEvent != null)
+				if (!_setColor)
 				{
-					StartedRepairingBreakableEvent(_closestBreakable);
+					_closestBreakable.GetComponent<Outline3D>().OutlineColor = _highlightColor;
+					_setColor = true;
 				}
-
-				_miniGame.StartMiniGame((success)=> 
+				if (Input.GetKeyDown(KeyCode.Space))
 				{
-					if (success && _closestBreakable != null)
+					if (StartedRepairingBreakableEvent != null)
 					{
-						_closestBreakable.Repair();
+						StartedRepairingBreakableEvent(_closestBreakable);
 					}
 
-					if(EndedRepairingBreakableEvent != null)
+					_miniGame.StartMiniGame((success) =>
 					{
-						EndedRepairingBreakableEvent(_closestBreakable);
-					}
-				});
+						if (success && _closestBreakable != null)
+						{
+							_closestBreakable.Repair();
+						}
+
+						if (EndedRepairingBreakableEvent != null)
+						{
+							EndedRepairingBreakableEvent(_closestBreakable);
+						}
+					});
+				}
+			}
+			else if (_setColor)
+			{
+				_closestBreakable.GetComponent<Outline3D>().OutlineColor = _originalClosestBreakableColor;
+				_setColor = false;
 			}
 		}
-		else if(_setColor)
+		else if(_closestBreakable != null && _closestBreakable.BreakState == Breakable.State.PermanentlyBroken)
 		{
-			_closestBreakable.GetComponent<Outline3D>().OutlineColor = _originalClosestBreakableColor;
-			_setColor = false;
+			_miniGame.StopMiniGame(false);
 		}
 	}
 
