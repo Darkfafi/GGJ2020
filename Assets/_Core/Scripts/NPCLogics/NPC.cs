@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(NavMeshAgent), typeof(AudioSource))]
 public class NPC : MonoBehaviour
 {
     public delegate void NPCBreakableHandler(NPC npc, Breakable breakableSeen);
@@ -41,11 +41,20 @@ public class NPC : MonoBehaviour
 	[SerializeField]
 	private float _viewDistance = 5f;
 
+	[Header("Audio")]
+	[SerializeField]
+	private AudioClip _noticeSFX = null;
+	[SerializeField]
+	private AudioClip _shockSFX = null;
+	[SerializeField]
+	private AudioClip _confusedSFX = null;
+
 	private Breakable _targetBreakable = null;
 	private Checkpoint _currentCheckpoint = null;
 	private NavMeshAgent _navMeshAgent = null;
 	private Coroutine _seeTargetCoroutine = null;
 	private Coroutine _returnToCheckpointRoutine = null;
+	private AudioSource _audioSource = null;
 
     private Animator myAnim;
 
@@ -60,6 +69,7 @@ public class NPC : MonoBehaviour
 	protected void Awake()
 	{
         myAnim = gameObject.GetComponent<Animator>();
+		_audioSource = gameObject.GetComponent<AudioSource>();
 		_navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
 		NPCCommunicator.Instance.RegisterNPC(this);
 	}
@@ -95,6 +105,7 @@ public class NPC : MonoBehaviour
 		StopNPCCallToBreakable();
 		UnassignFromCheckpoint();
         SetState(State.MovingToBreakable);
+		_audioSource.PlayOneShot(_noticeSFX);
 		_targetBreakable = targetBreakable;
 		_navMeshAgent.SetDestination(targetBreakable.GetNavMeshOrigin());
 		_navMeshAgent.isStopped = false;
@@ -174,6 +185,7 @@ public class NPC : MonoBehaviour
                     if (_targetBreakable.BreakState == Breakable.State.Broken)
                     {
                         myAnim.SetTrigger("Shock");
+						_audioSource.PlayOneShot(_shockSFX);
                         _targetBreakable.PermanentlyBreak();
                         if (NPCSeenBrokenBreakableEvent != null)
                         {
@@ -184,6 +196,7 @@ public class NPC : MonoBehaviour
                     }
                     else
                     {
+						_audioSource.PlayOneShot(_confusedSFX);
                         myAnim.SetTrigger("IsConfused");
                         yield return new WaitForSeconds(3.417f);
                     }
