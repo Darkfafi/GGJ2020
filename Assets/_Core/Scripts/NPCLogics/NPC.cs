@@ -133,7 +133,7 @@ public class NPC : MonoBehaviour
 	{
 		if(_currentCheckpoint != null)
 		{
-			Debug.Log("TODO: Do Action " + _currentCheckpoint.CheckpointInteractionType);
+			//Debug.Log("TODO: Do Action " + _currentCheckpoint.CheckpointInteractionType);
 		}
 	}
 
@@ -186,7 +186,6 @@ public class NPC : MonoBehaviour
                     {
                         myAnim.SetTrigger("IsConfused");
                         yield return new WaitForSeconds(3.417f);
-                        //myAnim.SetBool("IsConfused", false);
                     }
                     StopNPCCallToBreakable();
 				}
