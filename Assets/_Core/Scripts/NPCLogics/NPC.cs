@@ -169,19 +169,25 @@ public class NPC : MonoBehaviour
 			if (Physics.Raycast(transform.position, (_targetBreakable.transform.position - transform.position).normalized, out hit, _viewDistance, ~(1 << 9)))
 			{
 				if (hit.collider.gameObject.GetComponent<Breakable>() == _targetBreakable)
-				{
-					if (_targetBreakable.BreakState == Breakable.State.Broken)
-					{
-						myAnim.SetTrigger("Shock");
-						_navMeshAgent.isStopped = true;
-						_targetBreakable.PermanentlyBreak();
-						if (NPCSeenBrokenBreakableEvent != null)
-						{
-							NPCSeenBrokenBreakableEvent(this, _targetBreakable);
-						}
+                {
+                    _navMeshAgent.isStopped = true;
+                    if (_targetBreakable.BreakState == Breakable.State.Broken)
+                    {
+                        myAnim.SetTrigger("Shock");
+                        _targetBreakable.PermanentlyBreak();
+                        if (NPCSeenBrokenBreakableEvent != null)
+                        {
+                            NPCSeenBrokenBreakableEvent(this, _targetBreakable);
+                        }
 
-						yield return new WaitForSeconds(0.8f);
-					}
+                        yield return new WaitForSeconds(0.8f);
+                    }
+                    else
+                    {
+                        myAnim.SetTrigger("IsConfused");
+                        yield return new WaitForSeconds(3.417f);
+                        //myAnim.SetBool("IsConfused", false);
+                    }
                     StopNPCCallToBreakable();
 				}
 			}
