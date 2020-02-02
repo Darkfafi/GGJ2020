@@ -39,7 +39,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.32
+    value: 0.24
   color:
     overrideState: 0
     value: {r: 0, g: 0, b: 0, a: 1}
@@ -120,28 +120,28 @@ MonoBehaviour:
     value: 1
   temperature:
     overrideState: 1
-    value: 2
+    value: 10
   tint:
     overrideState: 0
     value: -7
   colorFilter:
     overrideState: 1
-    value: {r: 1, g: 1, b: 1, a: 1}
+    value: {r: 0.9990563, g: 1.071581, b: 1.3155276, a: 1}
   hueShift:
-    overrideState: 0
+    overrideState: 1
     value: 0
   saturation:
     overrideState: 1
-    value: 18
+    value: 19
   brightness:
     overrideState: 1
-    value: 22
+    value: -18
   postExposure:
     overrideState: 0
     value: 0
   contrast:
     overrideState: 1
-    value: -0
+    value: 30
   mixerRedOutRedIn:
     overrideState: 0
     value: 100
@@ -170,14 +170,14 @@ MonoBehaviour:
     overrideState: 0
     value: 100
   lift:
-    overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    overrideState: 1
+    value: {x: 0.9497191, y: 1, z: 0.9417612, w: -0.016207453}
   gamma:
     overrideState: 1
-    value: {x: 1, y: 1, z: 1, w: 0}
+    value: {x: 0.96676445, y: 0.9775098, z: 1, w: -0.12965964}
   gain:
-    overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    overrideState: 1
+    value: {x: 1, y: 1, z: 1, w: 0.24311179}
   masterCurve:
     overrideState: 0
     value:
@@ -1396,13 +1396,13 @@ MonoBehaviour:
     value: 1
   focusDistance:
     overrideState: 1
-    value: 2.08
+    value: 9
   aperture:
     overrideState: 1
-    value: 9.1
+    value: 1.7
   focalLength:
-    overrideState: 0
-    value: 50
+    overrideState: 1
+    value: 74
   kernelSize:
     overrideState: 0
     value: 1
@@ -1424,7 +1424,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 3.62
+    value: 1.89
   threshold:
     overrideState: 0
     value: 1
@@ -1480,7 +1480,7 @@ MonoBehaviour:
     value: {x: 0.5, y: 0.5}
   intensity:
     overrideState: 1
-    value: 0.157
+    value: 0.219
   smoothness:
     overrideState: 1
     value: 1
