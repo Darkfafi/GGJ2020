@@ -9,17 +9,12 @@ public class GhostMovement : MonoBehaviour
     public Renderer[] myRenderer;
     public void MoveTowardsObject(GameObject obj)
     {
-        
-        
-        
         Vector3 diff = obj.transform.position - transform.position;
 
         foreach (Renderer r in myRenderer)
         {
             r.material.DOFade(0f, 0.5f).SetEase(Ease.InOutBounce);
         }
-        
-        
         
         transform.DOMove(transform.position + diff.normalized * 2f, 1f).OnComplete(() =>
         {

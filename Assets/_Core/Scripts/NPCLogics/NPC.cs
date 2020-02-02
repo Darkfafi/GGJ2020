@@ -22,6 +22,22 @@ public class NPC : MonoBehaviour
 		get; private set;
 	}
 
+	public NavMeshAgent Agent
+	{
+		get
+		{
+			return _navMeshAgent;
+		}
+	}
+
+	public INavMeshTarget CurrentTarget
+	{
+		get
+		{
+			return _targetBreakable;
+		}
+	}
+
 	[SerializeField]
 	private float _viewDistance = 5f;
 

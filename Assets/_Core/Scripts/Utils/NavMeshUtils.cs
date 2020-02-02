@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.AI;
 
 public static class NavMeshUtils
@@ -8,6 +9,24 @@ public static class NavMeshUtils
 		NavMeshPath path = new NavMeshPath();
 		agent.CalculatePath(target, path);
 		return path;
+	}
+
+	public static Vector3[] WaypointsCurrentPath(this NavMeshAgent agent, INavMeshTarget target)
+	{
+		if (!agent.hasPath)
+			return new Vector3[] { };
+
+		List<Vector3> waypoints = new List<Vector3>();
+		NavMeshPath path = agent.CalculatePathToTarget(target.GetNavMeshOrigin());
+		if (path.corners.Length > 0 && path.status != NavMeshPathStatus.PathInvalid)
+		{
+			for (int i = 0; i < path.corners.Length - 1; i++)
+			{
+				waypoints.Add(path.corners[i]);
+			}
+		}
+		waypoints.Add(target.GetNavMeshOrigin());
+		return waypoints.ToArray();
 	}
 
 	public static float CalculateLengthPathToTarget(this NavMeshAgent agent, Vector3 target)
