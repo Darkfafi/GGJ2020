@@ -40,13 +40,13 @@ public class GhostBehaviour : MonoBehaviour
     }
     private IEnumerator BreakObject()
     {
+        yield return new WaitForSeconds(1f);
         _anim.SetBool(BreakAnimString, true);
         yield return new WaitForSeconds(3f);
-        
+       
         theObject.Break();
-        
-        yield return new WaitForSeconds(Random.Range(waitTimeBetweenBreakingMin, waitTimeBetweenBreakingMax));
         _anim.SetBool(BreakAnimString, false);
+        yield return new WaitForSeconds(Random.Range(waitTimeBetweenBreakingMin, waitTimeBetweenBreakingMax));
         FindRandomObject();
         
     }
