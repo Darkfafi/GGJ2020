@@ -21,25 +21,27 @@ public class PauseMenu : MonoBehaviour
     private void Awake()
     {
 		_pauseMenu.gameObject.SetActive(false);
-  
-
 	}
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (GameIsPaused)
-            {
-                Resume();
-            }
-            else
-            {
-                Pause();
-            }
-        }
+		if(!_endScreen.gameObject.activeSelf && !_winScreen.gameObject.activeSelf)
+		{
+			if (Input.GetKeyDown(KeyCode.Escape))
+			{
+				if (GameIsPaused)
+				{
+					Resume();
+				}
+				else
+				{
+					Pause();
+				}
+			}
+		}
+
         if (_pauseMenu.gameObject.activeSelf || _endScreen.gameObject.activeSelf || _winScreen.gameObject.activeSelf)
         {
-            
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Reset();
