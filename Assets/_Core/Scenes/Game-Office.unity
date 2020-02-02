@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1.19
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 8ce802a22875b66469495d33bd210c87, type: 2}
   m_HaloStrength: 0.5
@@ -61701,16 +61701,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6077083687537887585, guid: e38dd6ba5b673a445a900f5a322f857f,
-        type: 3}
-      propertyPath: waitTimeBetweenBreakingMax
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 6077083687537887585, guid: e38dd6ba5b673a445a900f5a322f857f,
-        type: 3}
-      propertyPath: waitTimeBetweenBreakingMin
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e38dd6ba5b673a445a900f5a322f857f, type: 3}

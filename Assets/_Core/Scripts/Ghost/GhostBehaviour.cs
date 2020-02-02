@@ -5,6 +5,7 @@ using UnityEngine;
 public class GhostBehaviour : MonoBehaviour
 {
     public Breakable[] breakableObjects;
+	public float waitTimeStart;
     public int waitTimeBetweenBreakingMin;
     public int waitTimeBetweenBreakingMax;
 
@@ -22,8 +23,9 @@ public class GhostBehaviour : MonoBehaviour
         _anim = GetComponent<Animator>();
     }
 
-    void Start()
+    private IEnumerator Start()
     {
+		yield return new WaitForSeconds(waitTimeStart);
         FindRandomObject();
     }
 
