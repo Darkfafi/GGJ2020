@@ -14,11 +14,17 @@ public class GhostBehaviour : MonoBehaviour
     private GhostMovement ghostMovement;
 
     private Animator _anim;
+    private AudioSource _audio;
+
+    public AudioClip movingSFX;
+    public AudioClip upsetSFX;
+    public AudioClip breakingSFX;
     public string BreakAnimString = "Breaking";
 
     private void Awake()
     {
         ghostMovement = GetComponent<GhostMovement>();
+        _audio = GetComponent<AudioSource>();
         _anim = GetComponent<Animator>();
     }
 
@@ -43,6 +49,7 @@ public class GhostBehaviour : MonoBehaviour
             num = UnityEngine.Random.Range(0, breakableObjects.Length);
 			SetCurrentBreakingObject(breakableObjects[num]);
             ghostMovement.MoveTowardsObject(theObject.gameObject);
+            _audio.PlayOneShot(movingSFX);
             StartCoroutine(BreakObject());
         }   
     }
@@ -69,7 +76,10 @@ public class GhostBehaviour : MonoBehaviour
 			StopAllCoroutines();
 			_anim.SetBool(BreakAnimString, false);
 			transform.DOKill();
-			transform.DOShakeScale(1f, 0.5f, 5).SetDelay(0.5f).OnComplete(() => 
+			transform.DOShakeScale(1f, 0.5f, 5).OnStart(()=>
+            {
+                _audio.PlayOneShot(upsetSFX);
+            }).SetDelay(0.5f).OnComplete(() => 
 			{
 				FindRandomObject();
 			});
@@ -80,6 +90,7 @@ public class GhostBehaviour : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         _anim.SetBool(BreakAnimString, true);
+        _audio.PlayOneShot(breakingSFX);
         yield return new WaitForSeconds(3f);
 		if (theObject != null)
 		{
