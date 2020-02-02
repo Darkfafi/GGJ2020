@@ -8,14 +8,18 @@ public class GameManager : MonoBehaviour
 {
     public Image[] exclamationMarks;
     public Image[] wrenches;
-    public Image endScreen;
-    public Image winScreen;
+    private Image endScreen;
+    private Image winScreen;
 
     private int currentExclamation;
     private int currentWrench;
     // Start is called before the first frame update
     private void Awake()
     {
+        endScreen = GameObject.Find("EndScreen").GetComponent<Image>();
+        winScreen = GameObject.Find("WinScreen").GetComponent<Image>();
+        endScreen.gameObject.SetActive(false);
+        winScreen.gameObject.SetActive(false);
         NPCCommunicator.Instance.NPCSeenBrokenBreakableEvent += OnShock;
         currentExclamation = 0;
         currentWrench = 0;
@@ -42,6 +46,7 @@ public class GameManager : MonoBehaviour
             {
                 exclamationMarks = null;
                 GameOverScreen();
+                currentExclamation = 0;
             }
         }
     }
@@ -56,6 +61,7 @@ public class GameManager : MonoBehaviour
             if (currentWrench > wrenches.Length - 1)
             {
                 wrenches = null;
+                currentWrench = 0;
                 WinScreen();
             }
         }
