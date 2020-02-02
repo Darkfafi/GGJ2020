@@ -1,15 +1,29 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Breakable), typeof(OutlineAnimator))]
+[RequireComponent(typeof(Breakable))]
 public class BreakableEntity : MonoBehaviour
 {
-	private Breakable _breakable;
+	[SerializeField]
 	private OutlineAnimator _outlineAnimator;
+
+	private Breakable _breakable;
+
+	public OutlineAnimator OutlineAnimator
+	{
+		get
+		{
+			return _outlineAnimator;
+		}
+	}
 
 	protected void Awake()
 	{
 		_breakable = gameObject.GetComponent<Breakable>();
-		_outlineAnimator = gameObject.GetComponent<OutlineAnimator>();
+
+		if (_outlineAnimator == null)
+		{
+			_outlineAnimator = gameObject.GetComponent<OutlineAnimator>();
+		}
         _breakable.StateChangedEvent += OnBreakableStateChangedEvent;
     }
 

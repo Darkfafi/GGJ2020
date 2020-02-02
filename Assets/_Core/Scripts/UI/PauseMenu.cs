@@ -1,25 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine;
 using UnityEngine.UI;
-
-
 
 public class PauseMenu : MonoBehaviour
 {
     private bool GameIsPaused = false;
-    private Image pauseMenuUI;
-    private Image endScreen;
-    private Image winScreen;
+
+	[SerializeField]
+	private Image _pauseMenu;
+
+	[SerializeField]
+	private Image _endScreen;
+
+	[SerializeField]
+	private Image _winScreen;
 
     private void Awake()
     {
-        pauseMenuUI = GameObject.Find("PauseMenu").GetComponent<Image>();
-        endScreen = GameObject.Find("EndScreen").GetComponent<Image>();
-        winScreen = GameObject.Find("WinScreen").GetComponent<Image>();
-        pauseMenuUI.gameObject.SetActive(false);
-    }
+		_pauseMenu.gameObject.SetActive(false);
+
+	}
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -33,7 +33,7 @@ public class PauseMenu : MonoBehaviour
                 Pause();
             }
         }
-        if (pauseMenuUI.gameObject.activeSelf || endScreen.gameObject.activeSelf || winScreen.gameObject.activeSelf)
+        if (_pauseMenu.gameObject.activeSelf || _endScreen.gameObject.activeSelf || _winScreen.gameObject.activeSelf)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -41,15 +41,16 @@ public class PauseMenu : MonoBehaviour
             }
         }
     }
+
     public void Resume()
     {
-        pauseMenuUI.gameObject.SetActive(false);
+		_pauseMenu.gameObject.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
     }
     void Pause()
     {
-        pauseMenuUI.gameObject.SetActive(true);
+		_pauseMenu.gameObject.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
     }

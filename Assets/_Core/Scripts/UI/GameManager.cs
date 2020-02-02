@@ -1,25 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine;
-using System;
 
 public class GameManager : MonoBehaviour
 {
     public Image[] exclamationMarks;
     public Image[] wrenches;
-    private Image endScreen;
-    private Image winScreen;
+
+	[SerializeField]
+    private Image _endScreen;
+
+	[SerializeField]
+    private Image _winScreen;
 
     private int currentExclamation;
     private int currentWrench;
     // Start is called before the first frame update
     private void Awake()
     {
-        endScreen = GameObject.Find("EndScreen").GetComponent<Image>();
-        winScreen = GameObject.Find("WinScreen").GetComponent<Image>();
-        endScreen.gameObject.SetActive(false);
-        winScreen.gameObject.SetActive(false);
+        _endScreen.gameObject.SetActive(false);
+        _winScreen.gameObject.SetActive(false);
         NPCCommunicator.Instance.NPCSeenBrokenBreakableEvent += OnShock;
         currentExclamation = 0;
         currentWrench = 0;
@@ -41,7 +40,6 @@ public class GameManager : MonoBehaviour
         {
             exclamationMarks[currentExclamation].gameObject.SetActive(true);
             currentExclamation++;
-            Debug.Log("EXCLAMATION");
             if (currentExclamation > exclamationMarks.Length - 1)
             {
                 exclamationMarks = null;
@@ -69,13 +67,13 @@ public class GameManager : MonoBehaviour
 
     public void GameOverScreen()
     {
-        endScreen.gameObject.SetActive(true);
+        _endScreen.gameObject.SetActive(true);
         Time.timeScale = 0f;
     }
 
     public void WinScreen()
     {
-        winScreen.gameObject.SetActive(true);
+        _winScreen.gameObject.SetActive(true);
         Time.timeScale = 0f;
     }
 }
