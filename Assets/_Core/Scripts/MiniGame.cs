@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class MiniGame : MonoBehaviour
@@ -34,7 +35,7 @@ public class MiniGame : MonoBehaviour
 
     private void Awake()
     {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     private void Update()
@@ -58,7 +59,10 @@ public class MiniGame : MonoBehaviour
 
                 counter++;
                 currentRepairNode++;
-                ChangeNodeColour();
+
+				PulseAnimation(currentKeyImage.transform);
+
+				ChangeNodeColour();
                 
                 //wrench
                 if (counter >= maxCounter)
@@ -91,7 +95,9 @@ public class MiniGame : MonoBehaviour
         miniGameContainer.SetActive(true);
         GenerateRepairNodes();
         SelectRandomKey();
-    }
+		PulseAnimation(currentKeyImage.transform);
+
+	}
 
     public void StopMiniGame(bool success)
     {
@@ -114,7 +120,6 @@ public class MiniGame : MonoBehaviour
 					gameManager.WrenchActivate();
 				}
                 cb(success);
-                
             }
         }
     }
@@ -122,7 +127,8 @@ public class MiniGame : MonoBehaviour
     public void ChangeNodeColour()
     {
         repairNodes[currentRepairNode].color = new Color32(8, 241, 36, 255);
-    }
+		PulseAnimation(repairNodes[currentRepairNode].transform);
+	}
 
     public void GenerateRepairNodes()
     {
@@ -140,6 +146,13 @@ public class MiniGame : MonoBehaviour
         randomKey = miniGameKeys[rand];
         currentKeyImage.sprite = randomKey.sprite;
     }
+
+	private void PulseAnimation(Transform t)
+	{
+		t.localScale = Vector3.one * 0.15f;
+		t.DOComplete(true);
+		t.DOScale(1f, 0.4f).SetEase(Ease.OutBack);
+	}
 
     [System.Serializable]
     public class Keys
