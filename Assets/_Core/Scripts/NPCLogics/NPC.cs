@@ -186,7 +186,6 @@ public class NPC : MonoBehaviour
                     {
                         myAnim.SetTrigger("IsConfused");
                         yield return new WaitForSeconds(3.417f);
-                        //myAnim.SetBool("IsConfused", false);
                     }
                     StopNPCCallToBreakable();
 				}
