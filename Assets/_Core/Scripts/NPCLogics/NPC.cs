@@ -86,7 +86,7 @@ public class NPC : MonoBehaviour
 		_currentCheckpoint.SetState(Checkpoint.State.Occupied);
 		if(setToCheckpointPos)
 		{
-			transform.position = _currentCheckpoint.transform.position;
+			transform.position = checkpoint.transform.position;
 			Vector3 rot = transform.eulerAngles;
 			rot.y = checkpoint.transform.eulerAngles.y;
 			transform.eulerAngles = rot;

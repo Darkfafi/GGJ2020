@@ -35,7 +35,10 @@ public class NPCDirector : MonoBehaviour
 				break;
 			}
 
-			Instantiate(_npcPrefab).AssignToCheckpoint(nextOpenCheckpoint);
+			NPC npc = Instantiate(_npcPrefab);
+			npc.AssignToCheckpoint(nextOpenCheckpoint);
+			npc.UnassignFromCheckpoint();
+			npc.StopNPCCallToBreakable();
 		}
 	}
 

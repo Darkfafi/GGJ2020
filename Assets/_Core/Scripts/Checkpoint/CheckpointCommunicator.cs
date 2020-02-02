@@ -33,7 +33,7 @@ public class CheckpointCommunicator
 		if (_openCheckpoints.Count == 0)
 			return null;
 
-		return _openCheckpoints[UnityEngine.Random.Range(0, _openCheckpoints.Count)];
+		return _openCheckpoints[Random.Range(0, _openCheckpoints.Count)];
 	}
 
 	public Checkpoint GetClosestUnsusedCheckpointToAgent(NavMeshAgent agent)
