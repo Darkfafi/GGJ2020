@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
+    public BGMController bgmController;
+    
     private bool GameIsPaused = false;
 
 	[SerializeField]
@@ -44,12 +46,14 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
+        bgmController.Alerted = true;
 		_pauseMenu.gameObject.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
     }
     void Pause()
     {
+        bgmController.Alerted = false;
 		_pauseMenu.gameObject.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
