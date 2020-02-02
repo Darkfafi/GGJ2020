@@ -159,8 +159,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetTransform: {fileID: 571394669}
-  _breakingParticle: {fileID: 6280221366694085696, guid: ac8cc7f4f5dfd484c98f5a147e3f3a4d,
-    type: 3}
 --- !u!65 &65908486598118460
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -272,6 +270,11 @@ PrefabInstance:
         type: 3}
       propertyPath: scalingMode
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6280221367945077123, guid: ac8cc7f4f5dfd484c98f5a147e3f3a4d,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 0.26666668
       objectReference: {fileID: 0}
     - target: {fileID: 6280221367945077125, guid: ac8cc7f4f5dfd484c98f5a147e3f3a4d,
         type: 3}
