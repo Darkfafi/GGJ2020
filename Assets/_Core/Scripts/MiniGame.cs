@@ -17,6 +17,14 @@ public class MiniGame : MonoBehaviour
 
     public GameManager gameManager;
 
+	public bool IsMinigameActive
+	{
+		get
+		{
+			return miniGameContainer.activeInHierarchy;
+		}
+	}
+
     [SerializeField]
     private int maxCounter = 4;
 
@@ -28,6 +36,7 @@ public class MiniGame : MonoBehaviour
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
+
     private void Update()
     {
         if (randomKey != null)
@@ -100,7 +109,10 @@ public class MiniGame : MonoBehaviour
 			{
 				MiniGameFinishHandler cb = _endCallback;
 				_endCallback = null;
-                gameManager.WrenchActivate();
+				if(success)
+				{
+					gameManager.WrenchActivate();
+				}
                 cb(success);
                 
             }

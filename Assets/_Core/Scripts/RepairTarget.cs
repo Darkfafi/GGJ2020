@@ -25,7 +25,7 @@ public class RepairTarget : MonoBehaviour
 	{
 		RegisterClosestBreakable();
 
-		if(IsValidBreakableInRange(_closestBreakable))
+		if(IsValidBreakableInRange(_closestBreakable) && !_miniGame.IsMinigameActive)
 		{
 			if(!_setColor)
 			{
