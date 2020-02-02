@@ -15,11 +15,11 @@ public class GhostMovement : MonoBehaviour
         {
             r.material.DOFade(0f, 0.5f).SetEase(Ease.InOutBounce);
         }
-        
+
+        transform.DOLookAt(obj.transform.position, 0.5f, AxisConstraint.Y, Vector3.up);
         transform.DOMove(transform.position + diff.normalized * 2f, 1f).OnComplete(() =>
         {
             transform.position = obj.transform.position + (transform.position - obj.transform.position).normalized * 4f;
-            transform.LookAt(obj.transform);
             transform.DOMove(obj.transform.position + diff.normalized * -2.5f, 1f);
             foreach (Renderer r in myRenderer)
             {
