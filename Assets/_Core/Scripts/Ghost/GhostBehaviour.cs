@@ -13,9 +13,13 @@ public class GhostBehaviour : MonoBehaviour
     private Breakable theObject;
     private GhostMovement ghostMovement;
 
+    private Animator _anim;
+    public string BreakAnimString = "Breaking";
+
     private void Awake()
     {
         ghostMovement = GetComponent<GhostMovement>();
+        _anim = GetComponent<Animator>();
     }
 
     void Start()
@@ -36,10 +40,15 @@ public class GhostBehaviour : MonoBehaviour
     }
     private IEnumerator BreakObject()
     {
+        _anim.SetBool(BreakAnimString, true);
         yield return new WaitForSeconds(3f);
+        
         theObject.Break();
+        
         yield return new WaitForSeconds(Random.Range(waitTimeBetweenBreakingMin, waitTimeBetweenBreakingMax));
+        _anim.SetBool(BreakAnimString, false);
         FindRandomObject();
+        
     }
    
  
