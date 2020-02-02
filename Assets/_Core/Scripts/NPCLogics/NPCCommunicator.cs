@@ -23,12 +23,30 @@ public class NPCCommunicator
 
 	private List<NPC> _npcCollection = new List<NPC>();
 
-	public void Loop(System.Action<NPC> method)
+	public void Loop(Action<NPC> method)
 	{
 		for(int i = 0; i < _npcCollection.Count; i++)
 		{
 			method(_npcCollection[i]);
 		}
+	}
+
+	public NPC[] GetNPCs()
+	{
+		return _npcCollection.ToArray();
+	}
+
+	public NPC[] GetNPCs(Predicate<NPC> filter)
+	{
+		List<NPC> returnValue = new List<NPC>();
+		for (int i = 0; i < _npcCollection.Count; i++)
+		{
+			if (filter(_npcCollection[i]))
+			{
+				returnValue.Add(_npcCollection[i]);
+			}
+		}
+		return returnValue.ToArray();
 	}
 
 	public void RegisterNPC(NPC npc)
