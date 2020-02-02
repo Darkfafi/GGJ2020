@@ -15,6 +15,15 @@ public class Breakable : MonoBehaviour, INavMeshTarget
 	[SerializeField]
 	private Transform _targetTransform;
 
+	[SerializeField]
+	private MeshRenderer _fixedMesh;
+
+	[SerializeField]
+	private MeshRenderer _brokenMesh;
+
+	[SerializeField]
+	private GameObject _brokenParticles;
+
 	public State BreakState
 	{
 		get; private set;
@@ -23,6 +32,11 @@ public class Breakable : MonoBehaviour, INavMeshTarget
 	protected void Awake()
 	{
 		BreakablesCommunicator.Instance.RegisterBreakable(this);
+	}
+
+	protected void Start()
+	{
+		SetState(State.Unbroken);
 	}
 
 	protected void OnDestroy()
@@ -37,40 +51,50 @@ public class Breakable : MonoBehaviour, INavMeshTarget
 
 	public void Break()
 	{
-		if(BreakState == State.PermanentlyBroken)
-		{
-			Debug.Log("Can't break item for it is permanently broken");
-			return;
-		}
-
-		// TODO: Set Art to Broken
-		BreakState = State.Broken;
-		FireStateChangedEvent();
+		SetState(State.Broken);
 	}
 
 	public void PermanentlyBreak()
 	{
-		BreakState = State.PermanentlyBroken;
-		FireStateChangedEvent();
+		SetState(State.PermanentlyBroken);
 	}
 
 	public void Repair()
 	{
+		SetState(State.Unbroken);
+	}
+
+	private void SetState(State state)
+	{
 		if (BreakState == State.PermanentlyBroken)
 		{
-			Debug.Log("Can't repair item for it is permanently broken");
+			Debug.LogErrorFormat("Can't go to state {0} for it is permanently broken", state);
 			return;
 		}
 
-		// TODO: Set Art to Repaired
-		BreakState = State.Unbroken;
+		bool isBroken = state != State.Unbroken;
+		if(_fixedMesh != null)
+		{
+			_fixedMesh.enabled = !isBroken;
+		}
+
+		if(_brokenMesh != null)
+		{
+			_brokenMesh.enabled = isBroken;
+		}
+
+		if (_brokenParticles != null)
+		{
+			_brokenParticles.SetActive(isBroken);
+		}
+
+		BreakState = state;
 		FireStateChangedEvent();
 	}
 
-
 	private void FireStateChangedEvent()
 	{
-		if(StateChangedEvent != null)
+		if (StateChangedEvent != null)
 		{
 			StateChangedEvent(this, BreakState);
 		}
