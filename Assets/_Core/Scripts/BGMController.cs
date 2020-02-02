@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BGMController : MonoBehaviour
 {
-    public float MaxVolume = 0.5f;
+    public float MaxVolume = 0.3f;
     public float FadeSpeed = 0.05f;
 
     public AudioSource LowVolume;
