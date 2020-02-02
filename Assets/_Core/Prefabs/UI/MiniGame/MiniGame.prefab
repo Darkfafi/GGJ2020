@@ -79,6 +79,7 @@ MonoBehaviour:
   countContainer: {fileID: 111961598240129989}
   nodePrefab: {fileID: 5690023853175739049, guid: 3bc1beea92c2b3e48aa2e08b63caff53,
     type: 3}
+  gameManager: {fileID: 0}
   maxCounter: 4
 --- !u!1 &111961597022948080
 GameObject:
@@ -140,7 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.8431373, b: 0.48627454, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -186,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0.7607844, b: 0.9607844, a: 1}
+  m_EffectColor: {r: 0.9622642, g: 0.57087666, b: 0.12255252, a: 1}
   m_EffectDistance: {x: 1.2, y: 1.2}
   m_UseGraphicAlpha: 1
 --- !u!1 &111961597281806318
