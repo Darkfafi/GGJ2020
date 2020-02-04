@@ -1,0 +1,184 @@
+fileFormatVersion: 2
+guid: ed28a2757495b3a46836fd9fe2d45684
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Butt
+    100002: Butty
+    100004: Butty_handle
+    100006: Corgi
+    100008: ear_left
+    100010: ear_right
+    100012: Happy_Corgi_globalTransformation
+    100014: Happy_corgi_IKHANDLES
+    100016: Happy_corgi_JOINTS
+    100018: //RootNode
+    100020: HappyCorgi_transform
+    100022: Head
+    100024: head1
+    100026: Head_handle
+    100028: joint10
+    100030: joint2
+    100032: joint8
+    100034: L_back_paw
+    100036: L_back_paw_handle
+    100038: L_front_paw
+    100040: L_front_paw_handle
+    100042: Leg_back_left
+    100044: Leg_back_right
+    100046: Leg_front_left
+    100048: Leg_front_right
+    100050: Lower_back_left
+    100052: Lower_back_right
+    100054: Lower_front_left
+    100056: Lower_front_right
+    100058: Neck
+    100060: Paw
+    100062: Paw2
+    100064: Paw_back_left
+    100066: Paw_back_right
+    100068: R_back_paw
+    100070: R_back_paw_handle
+    100072: R_front_paw
+    100074: R_front_paw_handle
+    100076: Tail
+    100078: Torso
+    100080: Upper_back_left
+    100082: Upper_back_right
+    100084: Upper_front_left
+    100086: Upper_front_right
+    400000: Butt
+    400002: Butty
+    400004: Butty_handle
+    400006: Corgi
+    400008: ear_left
+    400010: ear_right
+    400012: Happy_Corgi_globalTransformation
+    400014: Happy_corgi_IKHANDLES
+    400016: Happy_corgi_JOINTS
+    400018: //RootNode
+    400020: HappyCorgi_transform
+    400022: Head
+    400024: head1
+    400026: Head_handle
+    400028: joint10
+    400030: joint2
+    400032: joint8
+    400034: L_back_paw
+    400036: L_back_paw_handle
+    400038: L_front_paw
+    400040: L_front_paw_handle
+    400042: Leg_back_left
+    400044: Leg_back_right
+    400046: Leg_front_left
+    400048: Leg_front_right
+    400050: Lower_back_left
+    400052: Lower_back_right
+    400054: Lower_front_left
+    400056: Lower_front_right
+    400058: Neck
+    400060: Paw
+    400062: Paw2
+    400064: Paw_back_left
+    400066: Paw_back_right
+    400068: R_back_paw
+    400070: R_back_paw_handle
+    400072: R_front_paw
+    400074: R_front_paw_handle
+    400076: Tail
+    400078: Torso
+    400080: Upper_back_left
+    400082: Upper_back_right
+    400084: Upper_front_left
+    400086: Upper_front_right
+    2100000: lambert1
+    4300000: Corgi
+    7400000: HappyCorgi_Idle_Standing
+    9500000: //RootNode
+    13700000: Corgi
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
