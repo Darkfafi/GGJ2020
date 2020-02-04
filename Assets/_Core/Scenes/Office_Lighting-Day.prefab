@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8901008151397749477}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.17, y: 2.54, z: -12.89}
+  m_LocalPosition: {x: -12.94, y: 5.26, z: -11.89}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8901008152753158326}
@@ -43,7 +43,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: 0.68125457, b: 0.3537736, a: 1}
   m_Intensity: 1.4
-  m_Range: 12
+  m_Range: 20
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -158,7 +158,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8901008151507957261}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.505, y: 2.54, z: -4.72}
+  m_LocalPosition: {x: 16.2, y: 2.54, z: -4.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8901008152753158326}
@@ -557,7 +557,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8901008151950990228}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.56, y: 3.13, z: 3.45}
+  m_LocalPosition: {x: -8.56, y: 2.32, z: 3.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8901008152753158326}
@@ -573,7 +573,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 2
-  m_Color: {r: 1, g: 0.85874784, b: 0.7122642, a: 1}
+  m_Color: {r: 1, g: 0.9804992, b: 0.7137255, a: 1}
   m_Intensity: 0.25
   m_Range: 12
   m_SpotAngle: 30
@@ -828,7 +828,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8901008152213537760}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.94, y: 2.54, z: -12.43}
+  m_LocalPosition: {x: 3.94, y: 3.98, z: -12.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8901008152753158326}
@@ -1084,7 +1084,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8901008152753158326}
   m_Layer: 0
-  m_Name: Office_Lighting
+  m_Name: Office_Lighting-Day
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1276,7 +1276,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8901008153024477069
 Transform:
   m_ObjectHideFlags: 0
@@ -1423,7 +1423,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8901008153084637340}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.57, y: 2.54, z: -3.79}
+  m_LocalPosition: {x: 0.57, y: 6.64, z: 1.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8901008152753158326}
