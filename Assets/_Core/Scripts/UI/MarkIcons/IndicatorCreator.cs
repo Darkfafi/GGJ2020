@@ -4,7 +4,7 @@ using UnityEngine;
 public class IndicatorCreator : MonoBehaviour
 {
 	[SerializeField]
-	private ScreenIcon _indicatorPrefab;
+	private ScreenIcon _indicatorPrefab = null;
 
 	private Dictionary<Breakable, ScreenIcon> _indicators = new Dictionary<Breakable, ScreenIcon>();
 

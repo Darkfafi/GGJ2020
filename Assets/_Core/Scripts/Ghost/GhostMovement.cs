@@ -7,7 +7,7 @@ public class GhostMovement : MonoBehaviour
     public Renderer[] myRenderer;
 
 	[SerializeField]
-	private Behaviour _haloComp;
+	private Behaviour _haloComp = null;
 
 	[SerializeField]
 	private Vector3 _offset = Vector3.zero;

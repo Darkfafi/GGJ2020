@@ -5,10 +5,10 @@ using UnityEngine;
 public class FlyingIcon : CanvasItem
 {
 	[SerializeField]
-	private AnimationCurve _speedCurve;
+	private AnimationCurve _speedCurve = null;
 
 	[SerializeField]
-	private AnimationCurve _travelCurve;
+	private AnimationCurve _travelCurve = null;
 
 	private Coroutine _flyAnimationRoutine;
 

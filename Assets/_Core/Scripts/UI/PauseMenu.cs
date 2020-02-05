@@ -9,13 +9,13 @@ public class PauseMenu : MonoBehaviour
     private bool GameIsPaused = false;
 
 	[SerializeField]
-	private Image _pauseMenu;
+	private Image _pauseMenu = null;
 
 	[SerializeField]
-	private Image _endScreen;
+	private Image _endScreen = null;
 
 	[SerializeField]
-	private Image _winScreen;
+	private Image _winScreen = null;
 
 
     private void Awake()

@@ -13,16 +13,16 @@ public class Breakable : MonoBehaviour, INavMeshTarget
 	}
 
 	[SerializeField]
-	private Transform _targetTransform;
+	private Transform _targetTransform = null;
 
 	[SerializeField]
-	private MeshRenderer _fixedMesh;
+	private MeshRenderer _fixedMesh = null;
 
 	[SerializeField]
-	private MeshRenderer _brokenMesh;
+	private MeshRenderer _brokenMesh = null;
 
 	[SerializeField]
-	private GameObject _brokenParticles;
+	private GameObject _brokenParticles = null;
 
 	public State BreakState
 	{

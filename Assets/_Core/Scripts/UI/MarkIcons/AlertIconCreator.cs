@@ -5,7 +5,7 @@ using UnityEngine;
 public class AlertIconCreator : MonoBehaviour
 {
 	[SerializeField]
-	private ScreenIcon _alertItemPrefab;
+	private ScreenIcon _alertItemPrefab = null;
 
 	private Dictionary<NPC, ScreenIcon> _icons = new Dictionary<NPC, ScreenIcon>();
 

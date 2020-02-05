@@ -4,7 +4,7 @@
 public class ScreenIcon : CanvasItem
 {
 	[SerializeField]
-	private GameObject _iconContainer;
+	private GameObject _iconContainer = null;
 
 	[SerializeField]
 	private bool _inScreenIndication = true;

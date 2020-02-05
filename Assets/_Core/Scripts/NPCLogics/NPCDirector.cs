@@ -12,7 +12,7 @@ public class NPCDirector : MonoBehaviour
 	private int _npcAmount = 5;
 
 	[SerializeField]
-	private NPC _npcPrefab;
+	private NPC _npcPrefab = null;
 
 	public State DirectorState
 	{
