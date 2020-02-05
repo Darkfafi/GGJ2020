@@ -9,10 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8136367071851484988}
-  - component: {fileID: 8136367071851484989}
   - component: {fileID: 8136367071851484990}
   - component: {fileID: 962411299}
   - component: {fileID: 4937440091698430559}
+  - component: {fileID: 8136367071414361998}
+  - component: {fileID: 8136367071414361999}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -34,20 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8136367071851484989
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8136367071851484991}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e3d642aee5fe8347bc837113ed5a516, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _npcDirector: {fileID: 8136367071851484990}
-  _activateNPCsOnStart: 1
 --- !u!114 &8136367071851484990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,16 +62,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddb69ccc37d6d0342b031163e9d6829b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exclamationMarks:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  wrenches:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  _gameMode: {fileID: 8136367071414361999}
   _endScreen: {fileID: 0}
   _winScreen: {fileID: 0}
   winSFX: {fileID: 8300000, guid: d624d2cd2d4e9c248bbce3ad072bcc8f, type: 3}
@@ -185,3 +163,46 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8136367071414361998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8136367071851484991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5cd36aa49344e844941aac729905770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _exclamationHUDIcons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _wrenchesHUDIcons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _gameMode: {fileID: 8136367071414361999}
+  _alertIconCreator: {fileID: 0}
+  _gameCanvas: {fileID: 0}
+  _alertIconPrefab: {fileID: 6554165787920068252, guid: 7fc090c8afa431748a78b3de97d085cf,
+    type: 3}
+  _wrenchIconPrefab: {fileID: 7768127942989990216, guid: 18dad439162904b4d8024f31eb29b3d9,
+    type: 3}
+--- !u!114 &8136367071414361999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8136367071851484991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6983df4b71b642a42a518a87342da594, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _npcDirector: {fileID: 8136367071851484990}
+  _player: {fileID: 0}

@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5853301193034823729}
   - component: {fileID: 195285555037507848}
+  - component: {fileID: 7555379769843949286}
   - component: {fileID: 114217672426082498}
-  - component: {fileID: 95808080906370466}
   - component: {fileID: 114924525087824798}
+  - component: {fileID: 95808080906370466}
   - component: {fileID: 1074544173}
   - component: {fileID: 1074544172}
   - component: {fileID: 7532482141752912222}
@@ -60,6 +61,18 @@ NavMeshAgent:
   m_BaseOffset: 0.98
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &7555379769843949286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5853301193034589201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45c1d8c81862ac34b91e297a14f2fdfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114217672426082498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,6 +88,20 @@ MonoBehaviour:
   _miniGame: {fileID: 0}
   _repairDistance: 2
   _highlightColor: {r: 0.65626353, g: 0.16941082, b: 0.764151, a: 1}
+--- !u!114 &114924525087824798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5853301193034589201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0804bdba3357cde429599eba73dc733e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerCamera: {fileID: 0}
+  _movementSpeed: 5
 --- !u!95 &95808080906370466
 Animator:
   serializedVersion: 3
@@ -94,20 +121,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114924525087824798
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5853301193034589201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0804bdba3357cde429599eba73dc733e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerCamera: {fileID: 0}
-  _movementSpeed: 5
 --- !u!136 &1074544173
 CapsuleCollider:
   m_ObjectHideFlags: 0

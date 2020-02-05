@@ -3,32 +3,15 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public Image[] exclamationMarks;
-    public Image[] wrenches;
-
-	[Header("Requirements")]
 	[SerializeField]
-	private AlertIconCreator _alertIconCreator;
-
-	[Header("UI")]
-	[SerializeField]
-	private RepairTarget _repairTargetSource;
-
-	[SerializeField]
-	private Canvas _gameCanvas;
-
-	[SerializeField]
-	private FlyingIcon _alertIconPrefab;
-
-	[SerializeField]
-	private FlyingIcon _wrenchIconPrefab;
+	private RepairGameMode _gameMode = null;
 
 	[Header("Popups")]
 	[SerializeField]
-    private Image _endScreen;
+    private Image _endScreen = null;
 
 	[SerializeField]
-    private Image _winScreen;
+    private Image _winScreen = null;
 
     private AudioSource _audio;
     public AudioClip winSFX;
@@ -44,96 +27,40 @@ public class GameManager : MonoBehaviour
 		get; private set;
 	}
 
-    private void Awake()
+    protected void Awake()
     {
         _audio = GetComponent<AudioSource>();
         _endScreen.gameObject.SetActive(false);
         _winScreen.gameObject.SetActive(false);
-        NPCCommunicator.Instance.NPCSeenBrokenBreakableEvent += OnShock;
-		_repairTargetSource.EndedRepairingBreakableEvent += OnEndedRepairingBreakableEvent;
-		CurrentExcelation = 0;
-		CurrentWrench = 0;
     }
 
-    private void OnDestroy()
+	protected void Start()
 	{
-		_repairTargetSource.EndedRepairingBreakableEvent -= OnEndedRepairingBreakableEvent;
-		NPCCommunicator.Instance.NPCSeenBrokenBreakableEvent -= OnShock;
-    }
-
-	private void OnEndedRepairingBreakableEvent(Breakable breakable)
-	{
-		if (breakable.BreakState == Breakable.State.Unbroken)
-		{
-			WrenchActivate(breakable);
-		}
+		_gameMode.GameModeEndedEvent += OnGameModeEndedEvent;
+		_gameMode.StartGameMode(new RepairModeSettings(5, 3));
 	}
 
-	private void OnShock(NPC npc, Breakable breakableSeen)
-    {
-        ExclamationActivate(npc);
-    }
-
-	private void ExclamationActivate(NPC source)
+	protected void OnDestroy()
 	{
-		if (exclamationMarks != null)
+		_gameMode.GameModeEndedEvent -= OnGameModeEndedEvent;
+		_gameMode.StopGameMode();
+	}
+
+	private void OnGameModeEndedEvent(bool win)
+	{
+		if(win)
 		{
-			FlyingIcon icon = Instantiate(_alertIconPrefab, _gameCanvas.transform);
-			if (!icon.PositionOverWorldPosition(source.transform.position))
-			{
-				if(_alertIconCreator.TryGetScreenIconFor(source, out ScreenIcon screenIcon))
-				{
-					icon.transform.position = screenIcon.transform.position;
-				}
-			}
+			_winScreen.gameObject.SetActive(true);
+			_audio.PlayOneShot(winSFX);
+			Time.timeScale = 0f;
+		}
+		else
+		{
+			_endScreen.gameObject.SetActive(true);
+			_audio.PlayOneShot(LoseSFX);
+			Time.timeScale = 0f;
+		}
 
-			icon.FlyIconTo(exclamationMarks[CurrentExcelation].rectTransform.position, 1f, (x) =>
-			{
-				Destroy(x.gameObject);
-				exclamationMarks[CurrentExcelation].gameObject.SetActive(true);
-				CurrentExcelation++;
-				if (CurrentExcelation > exclamationMarks.Length - 1)
-				{
-					exclamationMarks = null;
-					GameOverScreen();
-					CurrentExcelation = 0;
-				}
-			});
-        }
-    }
-
-    private void WrenchActivate(Breakable source)
-    {
-        if (wrenches != null)
-        {
-			FlyingIcon icon = Instantiate(_wrenchIconPrefab, _gameCanvas.transform);
-			icon.PositionOverWorldPosition(source.transform.position);
-			icon.FlyIconTo(wrenches[CurrentWrench].rectTransform.position, 1f, (x) =>
-			{
-				Destroy(x.gameObject);
-				wrenches[CurrentWrench].gameObject.SetActive(true);
-				CurrentWrench++;
-				if (CurrentWrench > wrenches.Length - 1)
-				{
-					wrenches = null;
-					CurrentWrench = 0;
-					WinScreen();
-				}
-			});
-        }
-    }
-
-    public void GameOverScreen()
-    {
-        _endScreen.gameObject.SetActive(true);
-        _audio.PlayOneShot(LoseSFX);
-        Time.timeScale = 0f;
-    }
-
-    public void WinScreen()
-    {
-        _winScreen.gameObject.SetActive(true);
-        _audio.PlayOneShot(winSFX);
-        Time.timeScale = 0f;
-    }
+		_gameMode.StopGameMode();
+	}
 }

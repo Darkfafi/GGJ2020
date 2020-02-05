@@ -16,7 +16,7 @@ public class RepairTarget : MonoBehaviour
 	private float _repairDistance = 2f;
 
 	[SerializeField]
-	private Color _highlightColor;
+	private Color _highlightColor = Color.white;
 
 	private Breakable _closestBreakable;
 	private bool _setColor = false;
