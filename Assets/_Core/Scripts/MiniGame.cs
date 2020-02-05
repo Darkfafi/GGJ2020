@@ -16,8 +16,6 @@ public class MiniGame : MonoBehaviour
     public GameObject countContainer;
     public Image nodePrefab;
 
-    public GameManager gameManager;
-
     private AudioSource _audio;
     public AudioClip buttonPressSFX;
     public AudioClip finishedGameSFX;
@@ -41,7 +39,6 @@ public class MiniGame : MonoBehaviour
     private void Awake()
     {
         _audio = GetComponent<AudioSource>();
-        gameManager = FindObjectOfType<GameManager>();
     }
 
     private void Update()
@@ -104,7 +101,6 @@ public class MiniGame : MonoBehaviour
         GenerateRepairNodes();
         SelectRandomKey();
 		PulseAnimation(currentKeyImage.transform);
-
 	}
 
     public void StopMiniGame(bool success)
@@ -127,7 +123,6 @@ public class MiniGame : MonoBehaviour
 				if(success)
 				{
                     _audio.PlayOneShot(finishedGameSFX);
-					gameManager.WrenchActivate();
 				}
                 cb(success);
             }

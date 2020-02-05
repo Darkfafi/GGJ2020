@@ -14,6 +14,7 @@ public class NPC : MonoBehaviour
 	{
 		Idle,
 		MovingToBreakable,
+		Shock,
 		MovingToCheckpoint,
 	}
 
@@ -158,11 +159,13 @@ public class NPC : MonoBehaviour
         {
             case State.MovingToBreakable:
             case State.MovingToCheckpoint:
-
                 myAnim.SetBool("IsWalking", true);
                 // Play Walk Animation <-- I am so proud of you Faf.. <3
                 break;
-
+			case State.Shock:
+				myAnim.SetTrigger("Shock");
+				_audioSource.PlayOneShot(_shockSFX);
+				break;
             case State.Idle:
                 myAnim.SetBool("IsWalking", false);
                 // Play Idle Animation <-- You are the sweetest my Faf
@@ -187,8 +190,7 @@ public class NPC : MonoBehaviour
                     _navMeshAgent.isStopped = true;
                     if (_targetBreakable.BreakState == Breakable.State.Broken)
                     {
-                        myAnim.SetTrigger("Shock");
-						_audioSource.PlayOneShot(_shockSFX);
+						SetState(State.Shock);
                         _targetBreakable.PermanentlyBreak();
                         if (NPCSeenBrokenBreakableEvent != null)
                         {

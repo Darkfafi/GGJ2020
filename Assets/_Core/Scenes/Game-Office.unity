@@ -173,6 +173,12 @@ Transform:
   m_Father: {fileID: 1010899209}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!223 &204463856 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 5450237647095743050, guid: cb117ce8f01388e4aadaa6714f7a857f,
+    type: 3}
+  m_PrefabInstance: {fileID: 5450237645673183704}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &267653138 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5450237645546039754, guid: cb117ce8f01388e4aadaa6714f7a857f,
@@ -343,6 +349,18 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &720796880 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4980721874340762431, guid: cb117ce8f01388e4aadaa6714f7a857f,
+    type: 3}
+  m_PrefabInstance: {fileID: 5450237645673183704}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1f2c76ddda676f4eb0c2feb10e6697d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &732401109
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,6 +497,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1039857657 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114217672426082498, guid: 81e1aa5014745c5409f753fd91654c72,
+    type: 3}
+  m_PrefabInstance: {fileID: 421198002}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d032e86011fe24349a0e6a0005229c79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1090780878
 GameObject:
   m_ObjectHideFlags: 0
@@ -1756,6 +1786,28 @@ PrefabInstance:
       propertyPath: _endScreen
       value: 
       objectReference: {fileID: 1838166434}
+    - target: {fileID: 962411299, guid: 103bed988d016f84fbf453c268872dc1, type: 3}
+      propertyPath: _repairTargetSource
+      value: 
+      objectReference: {fileID: 1039857657}
+    - target: {fileID: 962411299, guid: 103bed988d016f84fbf453c268872dc1, type: 3}
+      propertyPath: _gameCanvas
+      value: 
+      objectReference: {fileID: 204463856}
+    - target: {fileID: 962411299, guid: 103bed988d016f84fbf453c268872dc1, type: 3}
+      propertyPath: _alertIconPrefab
+      value: 
+      objectReference: {fileID: 6554165787920068252, guid: 7fc090c8afa431748a78b3de97d085cf,
+        type: 3}
+    - target: {fileID: 962411299, guid: 103bed988d016f84fbf453c268872dc1, type: 3}
+      propertyPath: _wrenchIconPrefab
+      value: 
+      objectReference: {fileID: 7768127942989990216, guid: 18dad439162904b4d8024f31eb29b3d9,
+        type: 3}
+    - target: {fileID: 962411299, guid: 103bed988d016f84fbf453c268872dc1, type: 3}
+      propertyPath: _alertIconCreator
+      value: 
+      objectReference: {fileID: 720796880}
     - target: {fileID: 8136367071851484988, guid: 103bed988d016f84fbf453c268872dc1,
         type: 3}
       propertyPath: m_LocalPosition.x
