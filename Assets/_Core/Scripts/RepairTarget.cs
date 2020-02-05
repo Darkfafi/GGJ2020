@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
 using System;
+using UnityEngine;
 
 public class RepairTarget : MonoBehaviour
 {
@@ -40,6 +41,9 @@ public class RepairTarget : MonoBehaviour
 						StartedRepairingBreakableEvent(_closestBreakable);
 					}
 
+					transform.DOKill();
+					transform.DOLookAt(_closestBreakable.transform.position, 0.5f, AxisConstraint.Y, transform.up);
+
 					_miniGame.StartMiniGame((success) =>
 					{
 						if (success && _closestBreakable != null)
@@ -68,6 +72,7 @@ public class RepairTarget : MonoBehaviour
 
 	protected void OnDestroy()
 	{
+		transform.DOKill();
 		ClearClosestBreakableEntry();
 	}
 
