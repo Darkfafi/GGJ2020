@@ -76,6 +76,11 @@ public class EntityFilter : EntitiesHolder
 
 	#endregion
 
+	private EntityFilter()
+	{
+
+	}
+
 	private EntityFilter(FilterRules filter)
 	{
 		FilterRules = filter;

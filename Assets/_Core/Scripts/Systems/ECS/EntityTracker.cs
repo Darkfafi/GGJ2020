@@ -18,7 +18,7 @@ public class EntityTracker : EntitiesHolder, IComponentLifecycle, IEntityLifecyc
 	{
 		get
 		{
-			if(_instance != null)
+			if(_instance == null)
 			{
 				_instance = new EntityTracker();
 			}

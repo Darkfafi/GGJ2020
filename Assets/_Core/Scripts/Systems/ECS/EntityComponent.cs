@@ -14,13 +14,13 @@ public abstract class EntityComponent : MonoBehaviour, IComponentLifecycle
 		get; private set;
 	}
 
-	protected void Awake()
+	protected virtual void Awake()
 	{
 		Parent = GetComponent<Entity>();
 		Parent.RegisterComponent(this);
 	}
 
-	protected void Start()
+	protected virtual void Start()
 	{
 		if(AddedComponentEvent != null)
 		{
@@ -28,7 +28,7 @@ public abstract class EntityComponent : MonoBehaviour, IComponentLifecycle
 		}
 	}
 
-	protected void OnEnable()
+	protected virtual void OnEnable()
 	{
 		if (EnabledComponentEvent != null)
 		{
@@ -36,7 +36,7 @@ public abstract class EntityComponent : MonoBehaviour, IComponentLifecycle
 		}
 	}
 
-	protected void OnDisable()
+	protected virtual void OnDisable()
 	{
 		if (DisabledComponentEvent != null)
 		{
@@ -44,7 +44,7 @@ public abstract class EntityComponent : MonoBehaviour, IComponentLifecycle
 		}
 	}
 
-	protected void OnDestroy()
+	protected virtual void OnDestroy()
 	{
 		if (RemovedComponentEvent != null)
 		{

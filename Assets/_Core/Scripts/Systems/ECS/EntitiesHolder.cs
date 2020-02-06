@@ -82,12 +82,15 @@ public abstract class EntitiesHolder
 	public Entity[] GetAll(Func<Entity, bool> filterCondition, Comparison<Entity> sort = null)
 	{
 		List<Entity> result = new List<Entity>();
-		for (int i = 0, count = _entities.Count; i < count; i++)
+		if (_entities != null)
 		{
-			Entity e = _entities[i];
-			if (e != null && (filterCondition == null || filterCondition(e)))
+			for (int i = 0, count = _entities.Count; i < count; i++)
 			{
-				result.Add(e);
+				Entity e = _entities[i];
+				if (e != null && (filterCondition == null || filterCondition(e)))
+				{
+					result.Add(e);
+				}
 			}
 		}
 
