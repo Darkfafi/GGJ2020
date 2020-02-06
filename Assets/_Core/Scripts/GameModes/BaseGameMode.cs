@@ -2,15 +2,30 @@
 
 public abstract class BaseGameMode<T> : BaseGameMode where T : IGameModeSettings
 {
+	public enum State
+	{
+		NotActive,
+		Active
+	}
+
 	public T CurrentSetting
+	{
+		get; private set;
+	}
+
+	public State GameModeState
 	{
 		get; private set;
 	}
 
 	public void StartGameMode(T settings)
 	{
-		CurrentSetting = settings;
-		StartMode(CurrentSetting);
+		if(GameModeState != State.Active)
+		{
+			GameModeState = State.Active;
+			CurrentSetting = settings;
+			StartMode(CurrentSetting);
+		}
 	}
 
 	public override void StartGameMode(IGameModeSettings settings)
@@ -25,8 +40,12 @@ public abstract class BaseGameMode<T> : BaseGameMode where T : IGameModeSettings
 
 	public override void StopGameMode()
 	{
-		StopMode();
-		CurrentSetting = default;
+		if (GameModeState != State.NotActive)
+		{
+			GameModeState = State.NotActive;
+			StopMode();
+			CurrentSetting = default;
+		}
 	}
 
 	protected abstract void StartMode(T settings);

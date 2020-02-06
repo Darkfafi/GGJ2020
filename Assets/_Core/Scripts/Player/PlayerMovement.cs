@@ -2,7 +2,7 @@
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent), typeof(RepairTarget), typeof(Animator))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : EntityComponent
 {
 	[Header("Requirements")]
 	[SerializeField]
@@ -18,8 +18,9 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator _myAnim;
 
-	protected void Awake()
+	protected override void Awake()
 	{
+		base.Awake();
         _myAnim = gameObject.GetComponent<Animator>();
 		_navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
 		_repairTarget = gameObject.GetComponent<RepairTarget>();
@@ -59,10 +60,11 @@ public class PlayerMovement : MonoBehaviour
         _myAnim.SetBool("IsWalking", isWalking);
     }
 
-	protected void OnDestroy()
+	protected override void OnDestroy()
 	{
 		_repairTarget.StartedRepairingBreakableEvent -= OnStartedRepairingBreakableEvent;
 		_repairTarget.EndedRepairingBreakableEvent -= OnEndedRepairingBreakableEvent;
+		base.OnDestroy();
 	}
 
 	private void OnStartedRepairingBreakableEvent(Breakable target)

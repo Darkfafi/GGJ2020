@@ -9,8 +9,7 @@ public class RepairGameMode : BaseGameMode<RepairModeSettings>
 	[SerializeField]
 	private NPCDirector _npcDirector = null;
 
-	[SerializeField]
-	private Player _player = null;
+	private EntityFilter _playerEntityFilter;
 
 	public int RepairCount
 	{
@@ -24,12 +23,21 @@ public class RepairGameMode : BaseGameMode<RepairModeSettings>
 
 	protected override void StartMode(RepairModeSettings settings)
 	{
+		FilterRules.OpenConstructHasAnyTags("Player");
+		FilterRules.AddComponentToConstruct<RepairTarget>(true);
+		FilterRules.AddComponentToConstruct<PlayerMovement>(true);
+		FilterRules.CloseConstruct(out FilterRules filterRules);
+
+		_playerEntityFilter = EntityFilter.Create(filterRules);
+		_playerEntityFilter.TrackedEvent += ListenToRepair;
+		_playerEntityFilter.UntrackedEvent += UnlistenFromRepair;
+		_playerEntityFilter.ForEach(x => ListenToRepair(x));
+
 		// Setup
 		RepairCount = 0;
 		ShockCount = 0;
 
 		NPCCommunicator.Instance.NPCSeenBrokenBreakableEvent += OnNPCSeenBrokenBreakableEvent;
-		_player.RepairTarget.EndedRepairingBreakableEvent += OnEndedRepairingBreakableEvent;
 
 		// Start
 		_npcDirector.SetDirectorState(NPCDirector.State.Active);
@@ -37,7 +45,13 @@ public class RepairGameMode : BaseGameMode<RepairModeSettings>
 
 	protected override void StopMode()
 	{
-		_player.RepairTarget.EndedRepairingBreakableEvent -= OnEndedRepairingBreakableEvent;
+		_playerEntityFilter.TrackedEvent -= ListenToRepair;
+		_playerEntityFilter.UntrackedEvent -= UnlistenFromRepair;
+		_playerEntityFilter.ForEach(x => UnlistenFromRepair(x));
+
+		_playerEntityFilter.Clean();
+		_playerEntityFilter = null;
+
 		NPCCommunicator.Instance.NPCSeenBrokenBreakableEvent -= OnNPCSeenBrokenBreakableEvent;
 		_npcDirector.SetDirectorState(NPCDirector.State.Deactive);
 	}
@@ -83,6 +97,16 @@ public class RepairGameMode : BaseGameMode<RepairModeSettings>
 		{
 			CallWinCondition();
 		}
+	}
+
+	private void ListenToRepair(Entity entity)
+	{
+		entity.GetEntityComponent<RepairTarget>().EndedRepairingBreakableEvent += OnEndedRepairingBreakableEvent;
+	}
+
+	private void UnlistenFromRepair(Entity entity)
+	{
+		entity.GetEntityComponent<RepairTarget>().EndedRepairingBreakableEvent -= OnEndedRepairingBreakableEvent;
 	}
 }
 

@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-public class RepairTarget : MonoBehaviour
+public class RepairTarget : EntityComponent
 {
 	public Action<Breakable> StartedRepairingBreakableEvent;
 	public Action<Breakable> EndedRepairingBreakableEvent;
@@ -70,10 +70,11 @@ public class RepairTarget : MonoBehaviour
 		}
 	}
 
-	protected void OnDestroy()
+	protected override void OnDestroy()
 	{
 		transform.DOKill();
 		ClearClosestBreakableEntry();
+		base.OnDestroy();
 	}
 
 	private void RegisterClosestBreakable()
