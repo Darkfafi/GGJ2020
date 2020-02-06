@@ -91,7 +91,19 @@ public class MiniGame : MonoBehaviour
         }
     }
 
-    public void StartMiniGame(MiniGameFinishHandler endCallback)
+	protected void OnDestroy()
+	{
+		currentKeyImage.transform.DOKill();
+		if (repairNodes != null)
+		{
+			for (int i = 0; i < repairNodes.Length; i++)
+			{
+				repairNodes[i].transform.DOKill();
+			}
+		}
+	}
+
+	public void StartMiniGame(MiniGameFinishHandler endCallback)
     {
         StopMiniGame(false);
 		_endCallback = endCallback;
@@ -107,7 +119,8 @@ public class MiniGame : MonoBehaviour
     {
         miniGameContainer.SetActive(false);
         randomKey = null;
-        if (repairNodes != null)
+		currentKeyImage.transform.DOKill();
+		if (repairNodes != null)
         {
             for (int i = 0; i < repairNodes.Length; i++)
             {
