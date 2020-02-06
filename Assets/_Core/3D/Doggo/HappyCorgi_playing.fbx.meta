@@ -1,0 +1,214 @@
+fileFormatVersion: 2
+guid: a9110c42269206c4482d8a6c2b09e648
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Butty
+    100002: Butty_handle
+    100004: Corgi
+    100006: ear_left
+    100008: ear_right
+    100010: Happy_Corgi_globalTransformation
+    100012: Happy_corgi_IKHANDLES
+    100014: Happy_corgi_JOINTS
+    100016: //RootNode
+    100018: HappyCorgi_transform
+    100020: Head
+    100022: Head_handle
+    100024: ikHandle1
+    100026: ikHandle2
+    100028: ikHandle3
+    100030: ikHandle4
+    100032: ikHandle6
+    100034: ikHandle7
+    100036: ikHandle8
+    100038: joint10
+    100040: joint2
+    100042: joint8
+    100044: L_back_paw_handle
+    100046: L_front_paw_handle
+    100048: Leg_back_left
+    100050: Leg_back_right
+    100052: Leg_front_left
+    100054: Leg_front_right
+    100056: Lower_back_left
+    100058: Lower_back_right
+    100060: Lower_front_left
+    100062: Lower_front_right
+    100064: Neck
+    100066: Paw
+    100068: Paw2
+    100070: Paw_back_left
+    100072: Paw_back_right
+    100074: R_back_paw_handle
+    100076: R_front_paw_handle
+    100078: Tail
+    100080: Torso
+    100082: Upper_back_left
+    100084: Upper_back_right
+    100086: Upper_front_left
+    100088: Upper_front_right
+    400000: Butty
+    400002: Butty_handle
+    400004: Corgi
+    400006: ear_left
+    400008: ear_right
+    400010: Happy_Corgi_globalTransformation
+    400012: Happy_corgi_IKHANDLES
+    400014: Happy_corgi_JOINTS
+    400016: //RootNode
+    400018: HappyCorgi_transform
+    400020: Head
+    400022: Head_handle
+    400024: ikHandle1
+    400026: ikHandle2
+    400028: ikHandle3
+    400030: ikHandle4
+    400032: ikHandle6
+    400034: ikHandle7
+    400036: ikHandle8
+    400038: joint10
+    400040: joint2
+    400042: joint8
+    400044: L_back_paw_handle
+    400046: L_front_paw_handle
+    400048: Leg_back_left
+    400050: Leg_back_right
+    400052: Leg_front_left
+    400054: Leg_front_right
+    400056: Lower_back_left
+    400058: Lower_back_right
+    400060: Lower_front_left
+    400062: Lower_front_right
+    400064: Neck
+    400066: Paw
+    400068: Paw2
+    400070: Paw_back_left
+    400072: Paw_back_right
+    400074: R_back_paw_handle
+    400076: R_front_paw_handle
+    400078: Tail
+    400080: Torso
+    400082: Upper_back_left
+    400084: Upper_back_right
+    400086: Upper_front_left
+    400088: Upper_front_right
+    2100000: Corgi1
+    4300000: Corgi
+    7400000: Corgi_playing
+    9500000: //RootNode
+    13700000: Corgi
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Corgi_playing
+      takeName: Corgi_playing
+      firstFrame: 0
+      lastFrame: 658
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
