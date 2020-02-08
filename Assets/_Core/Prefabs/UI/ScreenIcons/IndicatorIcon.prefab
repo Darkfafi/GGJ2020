@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1624185217727642903}
   - component: {fileID: 1624185217727642902}
   m_Layer: 5
-  m_Name: Indicator
+  m_Name: IndicatorIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,6 +61,7 @@ MonoBehaviour:
   _iconContainer: {fileID: 1624185219177031447}
   _inScreenIndication: 1
   _offsetInScreenIndication: {x: 0, y: 100}
+  _offsetOutScreenIndication: {x: 70, y: 72}
 --- !u!1 &1624185219177031447
 GameObject:
   m_ObjectHideFlags: 0

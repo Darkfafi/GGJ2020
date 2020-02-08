@@ -61,6 +61,7 @@ MonoBehaviour:
   _iconContainer: {fileID: 1624185219177031447}
   _inScreenIndication: 1
   _offsetInScreenIndication: {x: 0, y: 100}
+  _offsetOutScreenIndication: {x: 70, y: 72}
 --- !u!1 &1624185219177031447
 GameObject:
   m_ObjectHideFlags: 0

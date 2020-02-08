@@ -12,11 +12,14 @@ public class ScreenIcon : CanvasItem
 	[SerializeField]
 	private Vector2 _offsetInScreenIndication = Vector2.zero;
 
+	[SerializeField]
+	private Vector2 _offsetOutScreenIndication = Vector2.zero;
+
 	private Transform _currentTarget;
 
 	protected void Update()
 	{
-		if (Camera != null && _currentTarget != null)
+		if (_currentTarget != null)
 		{
 			if(IsInViewport(_currentTarget.transform.position, out Vector3 viewportPos))
 			{
@@ -34,30 +37,24 @@ public class ScreenIcon : CanvasItem
 			}
 
 			_iconContainer.SetActive(true);
-			Vector3 relativePosDir3D = (Camera.transform.position - _currentTarget.transform.position).normalized;
-			Vector2 relativePosDir2D = new Vector2(relativePosDir3D.x, relativePosDir3D.z);
 
-			Vector3 forward = Camera.transform.forward;
-			forward = Vector3.Normalize(forward);
-			Vector3 right = Quaternion.Euler(new Vector3(0f, 90f, 0f)) * forward;
-			Vector3 relativeCameraRotation = (right + forward).normalized;
+			if (viewportPos.z < 0f)
+			{
+				viewportPos *= -1f;
+			}
 
-			float angle = 45f + (Mathf.Atan2(relativeCameraRotation.z, -relativeCameraRotation.x) + Mathf.Atan2(relativePosDir2D.y, relativePosDir2D.x)) * Mathf.Rad2Deg;
+			Vector2 finalPos = ViewportToCanvasPosition(viewportPos);
 
-			relativePosDir2D.x = Mathf.Cos(angle * Mathf.Deg2Rad);
-			relativePosDir2D.y = Mathf.Sin(angle * Mathf.Deg2Rad);
+			float canvasX = (CanvasSize.x / 2f) - _offsetOutScreenIndication.x;
+			float canvasY = (CanvasSize.y / 2f) - _offsetOutScreenIndication.y;
 
-			bool xLock = Mathf.Abs(relativePosDir2D.x) >= Mathf.Abs(relativePosDir2D.y);
-			relativePosDir2D.x = xLock ? relativePosDir2D.x / Mathf.Abs(relativePosDir2D.x) : relativePosDir2D.x;
-			relativePosDir2D.y = !xLock ? relativePosDir2D.y / Mathf.Abs(relativePosDir2D.y) : relativePosDir2D.y;
-			relativePosDir2D.x = Mathf.Clamp(relativePosDir2D.x, -0.92f, 0.92f);
-			relativePosDir2D.y = Mathf.Clamp(relativePosDir2D.y, -0.88f, 0.88f);
-			Vector2 screenPos = new Vector2(CanvasSize.x * relativePosDir2D.x, CanvasSize.y * relativePosDir2D.y);
-			screenPos.x = screenPos.x.Map(-CanvasSize.x, CanvasSize.x, -CanvasSize.x / 2, CanvasSize.x / 2);
-			screenPos.y = screenPos.y.Map(-CanvasSize.y, CanvasSize.y, -CanvasSize.y / 2, CanvasSize.y / 2);
-			screenPos.x = Mathf.Lerp(RectTransform.anchoredPosition.x, screenPos.x, Time.deltaTime * 5f);
-			screenPos.y = Mathf.Lerp(RectTransform.anchoredPosition.y, screenPos.y, Time.deltaTime * 5f);
-			RectTransform.anchoredPosition = screenPos;
+			finalPos.x = Mathf.Clamp(finalPos.x, -canvasX, canvasX);
+			finalPos.y = Mathf.Clamp(finalPos.y, -canvasY, canvasY);
+
+			finalPos.x = Mathf.Lerp(RectTransform.anchoredPosition.x, finalPos.x, Time.deltaTime * 5f);
+			finalPos.y = Mathf.Lerp(RectTransform.anchoredPosition.y, finalPos.y, Time.deltaTime * 5f);
+
+			RectTransform.anchoredPosition = finalPos;
 		}
 		else
 		{
