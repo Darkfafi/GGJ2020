@@ -38,6 +38,7 @@ public class EntityEditor : Editor
 			EditorGUILayout.BeginHorizontal();
 			GUIStyle s = new GUIStyle(GUI.skin.label);
 			s.normal.textColor = new Color(0.5f, 0.3f, 0.6f);
+			s.fontStyle = FontStyle.BoldAndItalic;
 			GUILayout.Label(" * " + tags[i], s);
 			s = new GUIStyle(GUI.skin.button);
 			s.normal.textColor = Color.red;
@@ -50,5 +51,13 @@ public class EntityEditor : Editor
 		}
 
 		EditorGUILayout.Space();
+
+		EditorGUILayout.LabelField("Entity Components: ");
+
+		EntityComponent[] entityComponents = entity.GetComponents<EntityComponent>();
+		for(int i = 0; i < entityComponents.Length; i++)
+		{
+			GUILayout.Label(" * " + entityComponents[i].GetType().Name + " (Script)", EditorStyles.boldLabel);
+		}
 	}
 }
