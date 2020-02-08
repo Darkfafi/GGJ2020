@@ -17,7 +17,7 @@ public sealed class Entity : MonoBehaviour, IComponentLifecycle, IEntityLifecycl
 	public event Action<EntityComponent> EnabledComponentEvent;
 	public event Action<EntityComponent> DisabledComponentEvent;
 
-	[SerializeField]
+	[SerializeField, HideInInspector]
 	private List<string> _tags = new List<string>();
 
 	private HashSet<EntityComponent> _components = new HashSet<EntityComponent>();

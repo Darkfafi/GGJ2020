@@ -8,6 +8,8 @@ public class EntityEditor : Editor
 
 	public override void OnInspectorGUI()
 	{
+		base.OnInspectorGUI();
+
 		Entity entity = target as Entity;
 
 		if(entity == null)
@@ -26,6 +28,7 @@ public class EntityEditor : Editor
 		{
 			entity.AddTag(_currentTagAddString);
 			_currentTagAddString = string.Empty;
+			EditorUtility.SetDirty(entity);
 		}
 
 		EditorGUILayout.EndHorizontal();
@@ -41,6 +44,7 @@ public class EntityEditor : Editor
 			if (GUILayout.Button("x", s, GUILayout.Width(25)))
 			{
 				entity.RemoveTag(tags[i]);
+				EditorUtility.SetDirty(entity);
 			}
 			EditorGUILayout.EndHorizontal();
 		}
