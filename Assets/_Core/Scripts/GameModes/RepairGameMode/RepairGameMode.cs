@@ -23,10 +23,9 @@ public class RepairGameMode : BaseGameMode<RepairModeSettings>
 
 	protected override void StartMode(RepairModeSettings settings)
 	{
-		FilterRules.OpenConstructHasAnyTags("Player");
-		FilterRules.AddComponentToConstruct<RepairTarget>(true);
-		FilterRules.AddComponentToConstruct<PlayerMovement>(true);
-		FilterRules.CloseConstruct(out FilterRules filterRules);
+		FilterRules filterRules = FilterRulesBuilder.SetupHasTagBuilder("Repairer")
+									.AddHasComponentRule<RepairTarget>(true)
+									.Result();
 
 		_playerEntityFilter = EntityFilter.Create(filterRules, ListenToRepair, UnlistenFromRepair);
 
