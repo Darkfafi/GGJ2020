@@ -24,7 +24,7 @@ public class RepairGameMode : BaseGameMode<RepairModeSettings>
 
 	protected override void StartMode(RepairModeSettings settings)
 	{
-		FilterRules repairerFilterRules = FilterRulesBuilder.SetupHasTagBuilder("Repairer")
+		FilterRules repairerFilterRules = FilterRulesBuilder.SetupHasTagBuilder(Tags.REPAIRER_TAG)
 									.AddHasComponentRule<RepairTarget>(true)
 									.Result();
 
