@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class Checkpoint : MonoBehaviour, INavMeshTarget
+public class Checkpoint : EntityComponent, INavMeshTarget
 {
 	public event Action<Checkpoint, State> CheckpointStateChangedEvent;
 
@@ -36,16 +36,6 @@ public class Checkpoint : MonoBehaviour, INavMeshTarget
 
 	[SerializeField]
 	private InteractonType _checkpointInteractionType = InteractonType.Speech;
-
-	protected void Awake()
-	{
-		CheckpointCommunicator.Instance.RegisterCheckpoint(this);
-	}
-
-	protected void OnDestroy()
-	{
-		CheckpointCommunicator.Instance.UnregisterCheckpoint(this);
-	}
 
 	public void SetState(State state)
 	{

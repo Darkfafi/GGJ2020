@@ -17,6 +17,7 @@ public class NPCDirector : MonoBehaviour
 
 	private EntityFilter _breakablesFilter;
 	private EntityFilter _npcsFilter;
+	private EntityFilter _checkpointsFilter;
 
 	public State DirectorState
 	{
@@ -25,6 +26,7 @@ public class NPCDirector : MonoBehaviour
 
 	protected void Awake()
 	{
+		_checkpointsFilter = EntityFilter.Create(FilterRulesBuilder.SetupNoTagsBuilder().AddHasComponentRule<Checkpoint>(true).Result(), null, null);
 		SetDirectorState(State.Deactive);
 	}
 
@@ -32,15 +34,15 @@ public class NPCDirector : MonoBehaviour
 	{
 		for (int i = 0; i < _npcAmount; i++)
 		{
-			Checkpoint nextOpenCheckpoint = CheckpointCommunicator.Instance.GetRandomUnusedCheckpoint();
-			if (nextOpenCheckpoint == null)
+			Entity nextCheckpointEntity = _checkpointsFilter.GetRandom(x => x.GetEntityComponent<Checkpoint>().CheckpointState == Checkpoint.State.UnOccupied);
+			if (nextCheckpointEntity == null)
 			{
-				Debug.LogErrorFormat("No checkpoints left to spawn NPCs on! Asked for {0} npcs, while only having {1} checkpoints!", _npcAmount, CheckpointCommunicator.Instance.GetAllCheckpoint().Length);
+				Debug.LogErrorFormat("No checkpoints left to spawn NPCs on! Asked for {0} npcs, while only having {1} checkpoints!", _npcAmount, _checkpointsFilter.GetAll().Length);
 				break;
 			}
 
 			NPC npc = Instantiate(_npcPrefab);
-			npc.AssignToCheckpoint(nextOpenCheckpoint);
+			npc.AssignToCheckpoint(nextCheckpointEntity.GetEntityComponent<Checkpoint>());
 			npc.UnassignFromCheckpoint();
 			npc.StopNPCCallToBreakable();
 		}
@@ -49,6 +51,9 @@ public class NPCDirector : MonoBehaviour
 	protected void OnDestroy()
 	{
 		SetDirectorState(State.Deactive);
+
+		_checkpointsFilter.Clean(null, null);
+		_checkpointsFilter = null;
 	}
 
 	public void SetDirectorState(State state)

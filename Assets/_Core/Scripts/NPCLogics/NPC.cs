@@ -56,6 +56,7 @@ public class NPC : EntityComponent
 	private Coroutine _seeTargetCoroutine = null;
 	private Coroutine _returnToCheckpointRoutine = null;
 	private AudioSource _audioSource = null;
+	private EntityFilter _checkpointsFilter;
 
     private Animator myAnim;
 
@@ -72,7 +73,15 @@ public class NPC : EntityComponent
         myAnim = gameObject.GetComponent<Animator>();
 		_audioSource = gameObject.GetComponent<AudioSource>();
 		_navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
+		_checkpointsFilter = EntityFilter.Create(FilterRulesBuilder.SetupNoTagsBuilder().AddHasComponentRule<Checkpoint>(true).Result(), null, null);
 		base.Awake();
+	}
+
+	protected override void OnDestroy()
+	{
+		_checkpointsFilter.Clean(null, null);
+		_checkpointsFilter = null;
+		base.OnDestroy();
 	}
 
 	public void AssignToCheckpoint(Checkpoint checkpoint, bool setToCheckpointPos = true)
@@ -134,8 +143,20 @@ public class NPC : EntityComponent
 
         if (_currentCheckpoint == null)
 		{
-			Checkpoint returningCheckpoint = CheckpointCommunicator.Instance.GetClosestUnsusedCheckpointToAgent(_navMeshAgent);
-			_returnToCheckpointRoutine = StartCoroutine(ReturnToCheckpointRoutine(returningCheckpoint));
+			Entity closestCheckpointEntity = _checkpointsFilter.GetFirst(x => x.GetEntityComponent<Checkpoint>().CheckpointState == Checkpoint.State.UnOccupied, 
+				(a, b) => 
+				{
+					return Mathf.RoundToInt(
+						CalculateLengthPathToTarget(a.GetEntityComponent<Checkpoint>().GetNavMeshOrigin()) - 
+						CalculateLengthPathToTarget(b.GetEntityComponent<Checkpoint>().GetNavMeshOrigin())
+					);
+				}
+			);
+
+			if(closestCheckpointEntity != null)
+			{
+				_returnToCheckpointRoutine = StartCoroutine(ReturnToCheckpointRoutine(closestCheckpointEntity.GetEntityComponent<Checkpoint>()));
+			}
 		}
 	}
 
