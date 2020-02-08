@@ -39,7 +39,12 @@ public sealed class EntityTracker : EntitiesHolder, IComponentLifecycle, IEntity
 
 	public void RegisterEntity(Entity entity)
 	{
-		if(Track(entity))
+		if (IsCleaned)
+		{
+			return;
+		}
+
+		if (Track(entity))
 		{
 			entity.AddedComponentEvent += AddedComponentEvent;
 			entity.RemovedComponentEvent += RemovedComponentEvent;
@@ -55,6 +60,11 @@ public sealed class EntityTracker : EntitiesHolder, IComponentLifecycle, IEntity
 
 	public void UnregisterEntity(Entity entity)
 	{
+		if(IsCleaned)
+		{
+			return;
+		}
+
 		if(Untrack(entity))
 		{
 			entity.AddedComponentEvent -= AddedComponentEvent;
@@ -76,6 +86,7 @@ public sealed class EntityTracker : EntitiesHolder, IComponentLifecycle, IEntity
 		UnlistenFromTrack(FireTrackedEvent, FireUntrackedEvent);
 		TrackedEvent = null;
 		UntrackedEvent = null;
+		_instance = null;
 	}
 
 	private void FireTrackedEvent(Entity entity)

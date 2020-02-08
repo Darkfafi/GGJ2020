@@ -102,7 +102,7 @@ public class EntityFilter : EntitiesHolder
 		EntityTracker.Instance.RemovedComponentEvent += OnEntityRemovedComponentEvent;
 		EntityTracker.Instance.EnabledComponentEvent += OnEntityChangedEnabledStateOfComponentEvent;
 		EntityTracker.Instance.DisabledComponentEvent += OnEntityChangedEnabledStateOfComponentEvent;
-		EntityTracker.Instance.TrackedEvent += OnTrackedEvent;
+		EntityTracker.Instance.TrackedEvent += OnEntityTrackedEvent;
 		EntityTracker.Instance.UntrackedEvent += OnEntityUntrackedEvent;
 		FillWithAlreadyExistingMatches();
 	}
@@ -123,7 +123,7 @@ public class EntityFilter : EntitiesHolder
 			EntityTracker.Instance.RemovedComponentEvent -= OnEntityRemovedComponentEvent;
 			EntityTracker.Instance.EnabledComponentEvent -= OnEntityChangedEnabledStateOfComponentEvent;
 			EntityTracker.Instance.DisabledComponentEvent -= OnEntityChangedEnabledStateOfComponentEvent;
-			EntityTracker.Instance.TrackedEvent -= OnTrackedEvent;
+			EntityTracker.Instance.TrackedEvent -= OnEntityTrackedEvent;
 			EntityTracker.Instance.UntrackedEvent -= OnEntityUntrackedEvent;
 			base.Clean();
 		}
@@ -132,14 +132,6 @@ public class EntityFilter : EntitiesHolder
 	public bool Equals(EntityFilter filter)
 	{
 		return Equals(filter.FilterRules);
-	}
-
-	private void OnTrackedEvent(Entity entity)
-	{
-		if (entity != null && FilterRules.HasFilterPermission(entity))
-		{
-			Track(entity);
-		}
 	}
 
 	private void OnEntityAddedComponentEvent(EntityComponent component)
@@ -167,8 +159,26 @@ public class EntityFilter : EntitiesHolder
 		TrackLogics(entity);
 	}
 
+	private void OnEntityTrackedEvent(Entity entity)
+	{
+		if (IsCleaned)
+		{
+			return;
+		}
+
+		if (entity != null && FilterRules.HasFilterPermission(entity))
+		{
+			Track(entity);
+		}
+	}
+
 	private void OnEntityUntrackedEvent(Entity entity)
 	{
+		if (IsCleaned)
+		{
+			return;
+		}
+
 		if (entity != null)
 		{
 			Untrack(entity);
@@ -186,6 +196,11 @@ public class EntityFilter : EntitiesHolder
 
 	private void TrackLogics(Entity entity)
 	{
+		if(IsCleaned)
+		{
+			return;
+		}
+
 		if (entity != null)
 		{
 			if (FilterRules.HasFilterPermission(entity))

@@ -7,6 +7,14 @@ public abstract class EntitiesHolder
 	private TrackHandler _trackedCallbacks;
 	private TrackHandler _untrackedCallbacks;
 
+	public bool IsCleaned
+	{
+		get
+		{
+			return _entities == null;
+		}
+	}
+
 	private List<Entity> _entities = new List<Entity>();
 
 	// -- Entity Query Methods -- \\
@@ -138,6 +146,9 @@ public abstract class EntitiesHolder
 		{
 			Untrack(_entities[i]);
 		}
+
+		_trackedCallbacks = null;
+		_untrackedCallbacks = null;
 
 		_entities.Clear();
 		_entities = null;
