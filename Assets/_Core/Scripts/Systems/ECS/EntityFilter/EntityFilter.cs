@@ -12,25 +12,37 @@ public class EntityFilter : EntitiesHolder
 	private static List<EntityFilter> _cachedFilters = new List<EntityFilter>();
 	private static Dictionary<EntityFilter, int> _cachedFiltersReferenceCounter = new Dictionary<EntityFilter, int>();
 
-	public static EntityFilter Create()
+	public static EntityFilter Create(TrackHandler trackedCallback, TrackHandler untrackedCallback, bool callForCurrentEntries = true)
 	{
-		return Create(FilterRules.CreateNoTagsFilter());
+		return Create(FilterRules.CreateNoTagsFilter(), trackedCallback, untrackedCallback, callForCurrentEntries);
 	}
 
-	public static EntityFilter Create(FilterRules filterRules)
+	public static EntityFilter Create(FilterRules filterRules, TrackHandler trackedCallback, TrackHandler untrackedCallback, bool callForCurrentEntries = true)
 	{
+		void SetupFilter(EntityFilter filterToSetup)
+		{
+			filterToSetup.ListenToTrack(trackedCallback, untrackedCallback);
+			if (callForCurrentEntries && trackedCallback != null)
+			{
+				filterToSetup.ForEach(x => trackedCallback(x));
+			}
+		}
+
 		for (int i = _cachedFilters.Count - 1; i >= 0; i--)
 		{
-			if (_cachedFilters[i].FilterRules.Equals(filterRules))
+			EntityFilter filter = _cachedFilters[i];
+			if (filter.FilterRules.Equals(filterRules))
 			{
-				AddReference(_cachedFilters[i]);
-				return _cachedFilters[i];
+				AddReference(filter);
+				SetupFilter(filter);
+				return filter;
 			}
 		}
 
 		EntityFilter self = new EntityFilter(filterRules);
 		AddReference(self);
 		_cachedFilters.Add(self);
+		SetupFilter(self);
 		return self;
 	}
 
@@ -95,8 +107,13 @@ public class EntityFilter : EntitiesHolder
 		FillWithAlreadyExistingMatches();
 	}
 
-	public override void Clean()
+	public void Clean(TrackHandler trackedCallback, TrackHandler untrackedCallback, bool callForCurrentEntries = true)
 	{
+		UnlistenFromTrack(trackedCallback, untrackedCallback);
+		if(callForCurrentEntries && untrackedCallback != null)
+		{
+			ForEach(x => untrackedCallback(x));
+		}
 		RemoveReference(this);
 		if (!HasReferences(this))
 		{

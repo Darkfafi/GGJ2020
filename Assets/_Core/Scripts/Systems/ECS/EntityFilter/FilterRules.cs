@@ -13,102 +13,6 @@ public struct FilterRules
 	private List<TagRule> _filterTags;
 	private List<IncComponentRule> _componentsToFilterOn;
 
-	private static bool _filterOpened = false;
-	private static FilterRules _constructingFiltersParameters;
-
-	/// <summary>
-	/// Creates a FilterRules with no tags to filter on
-	/// </summary>
-	public static void OpenConstructNoTags()
-	{
-		if (OpenFilterConstruct())
-		{
-			_constructingFiltersParameters = CreateNoTagsFilter();
-		}
-	}
-
-	/// <summary>
-	/// Creates a FilterRules which will filter getting elements which have ANY of the given tags (TagFilterType.HasAnyTag)
-	/// </summary>
-	public static void OpenConstructHasAnyTags(string tag, params string[] tags)
-	{
-		if (OpenFilterConstruct())
-		{
-			_constructingFiltersParameters = CreateHasAnyTagsFilter(tag, tags);
-		}
-	}
-
-	/// <summary>
-	/// Sets up Construct on given filterRules
-	/// </summary>
-	public static void OpenConstructOnFilterRules(FilterRules filterRules)
-	{
-		if (OpenFilterConstruct())
-		{
-			_constructingFiltersParameters = filterRules;
-		}
-	}
-
-	/// <summary>
-	/// Creates a FilterRules which will filter getting elements which have ALL of the given tags (TagFilterType.HasAllTags)
-	/// </summary>
-	public static void OpenConstructHasAllTags(string tag, params string[] tags)
-	{
-		if (OpenFilterConstruct())
-		{
-			_constructingFiltersParameters = CreateHasAllTagsFilter(tag, tags);
-		}
-	}
-
-	/// <summary>
-	/// Creates a FilterRules which will filter getting elements which have NONE of the given tags (TagFilterType.HasNoneOfTags)
-	/// </summary>
-	public static void OpenConstructNoneOfTags(string tag, params string[] tags)
-	{
-		if (OpenFilterConstruct())
-		{
-			_constructingFiltersParameters = CreateHasNoneOfTagsFilter(tag, tags);
-		}
-	}
-
-	/// <summary>
-	/// Adds a component type to the filter, so it will only get entries with the given component present.
-	/// The filter will return entries which have ALL of the components given to it.
-	/// </summary>
-	public static void AddComponentToConstruct<T>(bool mustBeEnabled) where T : EntityComponent
-	{
-		Type t = typeof(T);
-		IncComponentRule rule = new IncComponentRule(t, mustBeEnabled);
-		if (!_constructingFiltersParameters._componentsToFilterOn.Contains(rule))
-		{
-			_constructingFiltersParameters._componentsToFilterOn.Add(rule);
-		}
-	}
-
-	/// <summary>
-	/// Adds a tag to the filter, so it will filter with the given tag associated with the given tag filter type 
-	/// The filter will return entries which are valid to all Tag rules given to it.
-	/// </summary>
-	public static void AddTagToConstruct(string tag, TagFilterType filterType)
-	{
-		TagRule rule = new TagRule(tag, filterType);
-		if (!_constructingFiltersParameters._filterTags.Contains(rule) && rule.Valid)
-		{
-			_constructingFiltersParameters._filterTags.Add(rule);
-		}
-	}
-
-	/// <summary>
-	/// Closes the creation of the filter and gives the constructed filter, using the static methods, into the out parameter
-	/// </summary>
-	/// <param name="filterCreated"> The constructed Filter </param>
-	public static void CloseConstruct(out FilterRules filterCreated)
-	{
-		filterCreated = _constructingFiltersParameters;
-		_filterOpened = false;
-		_constructingFiltersParameters = default(FilterRules);
-	}
-
 	/// <summary>
 	/// Creates a FilterRules with no tags to filter on (TagFilterType.None)
 	/// This FilterRules is not open to any static construction methods. 
@@ -153,22 +57,6 @@ public struct FilterRules
 		List<string> myTags = new List<string>(tags);
 		myTags.Add(tag);
 		return new FilterRules(myTags.ToArray(), TagFilterType.HasNoneOfTags);
-	}
-
-	/// <summary>
-	/// This method allows you to create the FilterRules using the given static methods. To get the constructed FilterRules, call the `CloseFilterRulesCreation` method.
-	/// </summary>
-	private static bool OpenFilterConstruct()
-	{
-		if (_filterOpened)
-		{
-			throw new Exception("Tried opening a filter creation while a previous one has not yet been closed using `CloseFilterRulesCreation`");
-		}
-		else
-		{
-			_filterOpened = true;
-			return true;
-		}
 	}
 
 	public bool HasFilterPermission(Entity entity)
@@ -254,6 +142,16 @@ public struct FilterRules
 		return false;
 	}
 
+	public TagRule[] GetTagRules()
+	{
+		return _filterTags.ToArray();
+	}
+
+	public IncComponentRule[] GetIncComponentRules()
+	{
+		return _componentsToFilterOn.ToArray();
+	}
+
 	private FilterRules(string[] tags, TagFilterType tagFilterType)
 	{
 		_filterTags = new List<TagRule>();
@@ -265,7 +163,13 @@ public struct FilterRules
 		}
 	}
 
-	private struct IncComponentRule
+	public FilterRules(TagRule[] tagRules, IncComponentRule[] incComponentRules)
+	{
+		_filterTags = new List<TagRule>(tagRules);
+		_componentsToFilterOn = new List<IncComponentRule>(incComponentRules);
+	}
+
+	public struct IncComponentRule
 	{
 		public Type ComponentType
 		{
@@ -297,7 +201,7 @@ public struct FilterRules
 		}
 	}
 
-	private struct TagRule
+	public struct TagRule
 	{
 		public string Tag
 		{
