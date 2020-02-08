@@ -46,15 +46,15 @@ public sealed class EntityTracker : EntitiesHolder, IComponentLifecycle, IEntity
 
 		if (Track(entity))
 		{
-			entity.AddedComponentEvent += AddedComponentEvent;
-			entity.RemovedComponentEvent += RemovedComponentEvent;
-			entity.EnabledComponentEvent += EnabledComponentEvent;
-			entity.DisabledComponentEvent += DisabledComponentEvent;
+			entity.AddedComponentEvent += OnAddedComponentEvent;
+			entity.RemovedComponentEvent += OnRemovedComponentEvent;
+			entity.EnabledComponentEvent += OnEnabledComponentEvent;
+			entity.DisabledComponentEvent += OnDisabledComponentEvent;
 
-			entity.TagAddedEvent += TagAddedEvent;
-			entity.TagRemovedEvent += TagRemovedEvent;
-			entity.EntityCreatedEvent += EntityCreatedEvent;
-			entity.EntityDestroyEvent += EntityDestroyEvent;
+			entity.TagAddedEvent += OnTagAddedEvent;
+			entity.TagRemovedEvent += OnTagRemovedEvent;
+			entity.EntityCreatedEvent += OnEntityCreatedEvent;
+			entity.EntityDestroyEvent += OnEntityDestroyEvent;
 		}
 	}
 
@@ -67,15 +67,15 @@ public sealed class EntityTracker : EntitiesHolder, IComponentLifecycle, IEntity
 
 		if(Untrack(entity))
 		{
-			entity.AddedComponentEvent -= AddedComponentEvent;
-			entity.RemovedComponentEvent -= RemovedComponentEvent;
-			entity.EnabledComponentEvent -= EnabledComponentEvent;
-			entity.DisabledComponentEvent -= DisabledComponentEvent;
+			entity.AddedComponentEvent -= OnAddedComponentEvent;
+			entity.RemovedComponentEvent -= OnRemovedComponentEvent;
+			entity.EnabledComponentEvent -= OnEnabledComponentEvent;
+			entity.DisabledComponentEvent -= OnDisabledComponentEvent;
 
-			entity.TagAddedEvent -= TagAddedEvent;
-			entity.TagRemovedEvent -= TagRemovedEvent;
-			entity.EntityCreatedEvent -= EntityCreatedEvent;
-			entity.EntityDestroyEvent -= EntityDestroyEvent;
+			entity.TagAddedEvent -= OnTagAddedEvent;
+			entity.TagRemovedEvent -= OnTagRemovedEvent;
+			entity.EntityCreatedEvent -= OnEntityCreatedEvent;
+			entity.EntityDestroyEvent -= OnEntityDestroyEvent;
 			UnityEngine.Object.Destroy(entity.gameObject);
 		}
 	}
@@ -103,5 +103,45 @@ public sealed class EntityTracker : EntitiesHolder, IComponentLifecycle, IEntity
 		{
 			UntrackedEvent(entity);
 		}
+	}
+
+	private void OnAddedComponentEvent(EntityComponent entityComponent)
+	{
+		AddedComponentEvent?.Invoke(entityComponent);
+	}
+
+	private void OnRemovedComponentEvent(EntityComponent entityComponent)
+	{
+		RemovedComponentEvent?.Invoke(entityComponent);
+	}
+
+	private void OnEnabledComponentEvent(EntityComponent entityComponent)
+	{
+		EnabledComponentEvent?.Invoke(entityComponent);
+	}
+
+	private void OnDisabledComponentEvent(EntityComponent entityComponent)
+	{
+		DisabledComponentEvent?.Invoke(entityComponent);
+	}
+
+	private void OnTagAddedEvent(Entity entity, string tag)
+	{
+		TagAddedEvent?.Invoke(entity, tag);
+	}
+
+	private void OnTagRemovedEvent(Entity entity, string tag)
+	{
+		TagRemovedEvent?.Invoke(entity, tag);
+	}
+
+	private void OnEntityCreatedEvent(Entity entity)
+	{
+		EntityCreatedEvent?.Invoke(entity);
+	}
+
+	private void OnEntityDestroyEvent(Entity entity)
+	{
+		EntityDestroyEvent?.Invoke(entity);
 	}
 }

@@ -142,10 +142,10 @@ public sealed class Entity : MonoBehaviour, IComponentLifecycle, IEntityLifecycl
 			if (gameObject.GetComponents(component.GetType()).Contains(component))
 			{
 				_components.Add(component);
-				component.AddedComponentEvent += AddedComponentEvent;
-				component.RemovedComponentEvent += RemovedComponentEvent;
-				component.EnabledComponentEvent += EnabledComponentEvent;
-				component.DisabledComponentEvent += DisabledComponentEvent;
+				component.AddedComponentEvent += OnAddedComponentEvent;
+				component.RemovedComponentEvent += OnRemovedComponentEvent;
+				component.EnabledComponentEvent += OnEnabledComponentEvent;
+				component.DisabledComponentEvent += OnDisabledComponentEvent;
 			}
 			else
 			{
@@ -159,10 +159,10 @@ public sealed class Entity : MonoBehaviour, IComponentLifecycle, IEntityLifecycl
 		if (_components.Contains(component))
 		{
 			_components.Remove(component);
-			component.AddedComponentEvent -= AddedComponentEvent;
-			component.RemovedComponentEvent -= RemovedComponentEvent;
-			component.EnabledComponentEvent -= EnabledComponentEvent;
-			component.DisabledComponentEvent -= DisabledComponentEvent;
+			component.AddedComponentEvent -= OnAddedComponentEvent;
+			component.RemovedComponentEvent -= OnRemovedComponentEvent;
+			component.EnabledComponentEvent -= OnEnabledComponentEvent;
+			component.DisabledComponentEvent -= OnDisabledComponentEvent;
 			Destroy(component);
 		}
 	}
@@ -188,6 +188,26 @@ public sealed class Entity : MonoBehaviour, IComponentLifecycle, IEntityLifecycl
 		}
 
 		EntityTracker.Instance.UnregisterEntity(this);
+	}
+
+	private void OnAddedComponentEvent(EntityComponent entityComponent)
+	{
+		AddedComponentEvent?.Invoke(entityComponent);
+	}
+
+	private void OnRemovedComponentEvent(EntityComponent entityComponent)
+	{
+		RemovedComponentEvent?.Invoke(entityComponent);
+	}
+
+	private void OnEnabledComponentEvent(EntityComponent entityComponent)
+	{
+		EnabledComponentEvent?.Invoke(entityComponent);
+	}
+
+	private void OnDisabledComponentEvent(EntityComponent entityComponent)
+	{
+		DisabledComponentEvent?.Invoke(entityComponent);
 	}
 }
 
