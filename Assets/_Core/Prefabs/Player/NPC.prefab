@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5853301193034823729}
-  - component: {fileID: 195175682830769922}
+  - component: {fileID: 4541944448661691272}
   - component: {fileID: 114027556466854462}
+  - component: {fileID: 195175682830769922}
   - component: {fileID: 6731613472682313384}
   - component: {fileID: 9154686159098039367}
   m_Layer: 9
@@ -35,6 +36,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4541944448661691272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5853301193034589201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 006ac7d575a6d9a4c97a89df74f61742, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tags: []
+--- !u!114 &114027556466854462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5853301193034589201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 643f2f1f9d0a9334aa24e1876c437df9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _viewDistance: 5
+  _noticeSFX: {fileID: 8300000, guid: bc05b5b7d318afa4898cf4e6c47395b1, type: 3}
+  _shockSFX: {fileID: 8300000, guid: fa62b37f7812b0a4bad1ae164a74e745, type: 3}
+  _confusedSFX: {fileID: 8300000, guid: 20b4d10f66fcfcd49bfabbb6438fdab6, type: 3}
 --- !u!195 &195175682830769922
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -57,22 +87,6 @@ NavMeshAgent:
   m_BaseOffset: 0.98
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &114027556466854462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5853301193034589201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 643f2f1f9d0a9334aa24e1876c437df9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _viewDistance: 5
-  _noticeSFX: {fileID: 8300000, guid: bc05b5b7d318afa4898cf4e6c47395b1, type: 3}
-  _shockSFX: {fileID: 8300000, guid: fa62b37f7812b0a4bad1ae164a74e745, type: 3}
-  _confusedSFX: {fileID: 8300000, guid: 20b4d10f66fcfcd49bfabbb6438fdab6, type: 3}
 --- !u!95 &6731613472682313384
 Animator:
   serializedVersion: 3

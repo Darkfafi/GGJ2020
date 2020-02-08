@@ -10,6 +10,7 @@ public class RepairGameMode : BaseGameMode<RepairModeSettings>
 	private NPCDirector _npcDirector = null;
 
 	private EntityFilter _repairersEntityFilter;
+	private EntityFilter _npcEntityFilter;
 
 	public int RepairCount
 	{
@@ -23,17 +24,18 @@ public class RepairGameMode : BaseGameMode<RepairModeSettings>
 
 	protected override void StartMode(RepairModeSettings settings)
 	{
-		FilterRules filterRules = FilterRulesBuilder.SetupHasTagBuilder("Repairer")
+		FilterRules repairerFilterRules = FilterRulesBuilder.SetupHasTagBuilder("Repairer")
 									.AddHasComponentRule<RepairTarget>(true)
 									.Result();
 
-		_repairersEntityFilter = EntityFilter.Create(filterRules, ListenToRepair, UnlistenFromRepair);
+		_repairersEntityFilter = EntityFilter.Create(repairerFilterRules, OnRepairerTracked, OnRepairerUntracked);
+
+		FilterRules npcFilterRules = FilterRulesBuilder.SetupNoTagsBuilder().AddHasComponentRule<NPC>(true).Result();
+		_npcEntityFilter = EntityFilter.Create(npcFilterRules, OnNPCTracked, OnNPCUntracked);
 
 		// Setup
 		RepairCount = 0;
 		ShockCount = 0;
-
-		NPCCommunicator.Instance.NPCSeenBrokenBreakableEvent += OnNPCSeenBrokenBreakableEvent;
 
 		// Start
 		_npcDirector.SetDirectorState(NPCDirector.State.Active);
@@ -41,10 +43,12 @@ public class RepairGameMode : BaseGameMode<RepairModeSettings>
 
 	protected override void StopMode()
 	{
-		_repairersEntityFilter.Clean(ListenToRepair, UnlistenFromRepair);
+		_repairersEntityFilter.Clean(OnRepairerTracked, OnRepairerUntracked);
 		_repairersEntityFilter = null;
 
-		NPCCommunicator.Instance.NPCSeenBrokenBreakableEvent -= OnNPCSeenBrokenBreakableEvent;
+		_npcEntityFilter.Clean(OnNPCTracked, OnNPCUntracked);
+		_npcEntityFilter = null;
+
 		_npcDirector.SetDirectorState(NPCDirector.State.Deactive);
 	}
 
@@ -91,14 +95,26 @@ public class RepairGameMode : BaseGameMode<RepairModeSettings>
 		}
 	}
 
-	private void ListenToRepair(Entity entity)
+	// Tracking
+
+	private void OnRepairerTracked(Entity entity)
 	{
 		entity.GetEntityComponent<RepairTarget>().EndedRepairingBreakableEvent += OnEndedRepairingBreakableEvent;
 	}
 
-	private void UnlistenFromRepair(Entity entity)
+	private void OnRepairerUntracked(Entity entity)
 	{
 		entity.GetEntityComponent<RepairTarget>().EndedRepairingBreakableEvent -= OnEndedRepairingBreakableEvent;
+	}
+
+	private void OnNPCTracked(Entity entity)
+	{
+		entity.GetEntityComponent<NPC>().NPCSeenBrokenBreakableEvent += OnNPCSeenBrokenBreakableEvent;
+	}
+
+	private void OnNPCUntracked(Entity entity)
+	{
+		entity.GetEntityComponent<NPC>().NPCSeenBrokenBreakableEvent -= OnNPCSeenBrokenBreakableEvent;
 	}
 }
 

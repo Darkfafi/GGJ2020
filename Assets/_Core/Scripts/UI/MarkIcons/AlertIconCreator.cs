@@ -8,20 +8,32 @@ public class AlertIconCreator : MonoBehaviour
 	private ScreenIcon _alertItemPrefab = null;
 
 	private Dictionary<NPC, ScreenIcon> _icons = new Dictionary<NPC, ScreenIcon>();
+	private EntityFilter _npcFilter;
 
 	protected void Awake()
 	{
-		NPCCommunicator.Instance.NPCStateSetEvent += OnNPCStateSetEvent;
+		_npcFilter = EntityFilter.Create(FilterRulesBuilder.SetupNoTagsBuilder().AddHasComponentRule<NPC>(true).Result(), OnNPCTracked, OnNPCUntracked);
 	}
 
 	protected void OnDestroy()
 	{
-		NPCCommunicator.Instance.NPCStateSetEvent -= OnNPCStateSetEvent;
+		_npcFilter.Clean(OnNPCTracked, OnNPCUntracked);
+		_npcFilter = null;
 	}
 
 	public bool TryGetScreenIconFor(NPC npc, out ScreenIcon screenIcon)
 	{
 		return _icons.TryGetValue(npc, out screenIcon);
+	}
+
+	private void OnNPCTracked(Entity entity)
+	{
+		entity.GetEntityComponent<NPC>().NPCStateSetEvent += OnNPCStateSetEvent;
+	}
+
+	private void OnNPCUntracked(Entity entity)
+	{
+		entity.GetEntityComponent<NPC>().NPCStateSetEvent -= OnNPCStateSetEvent;
 	}
 
 	private void OnNPCStateSetEvent(NPC npc, NPC.State state)

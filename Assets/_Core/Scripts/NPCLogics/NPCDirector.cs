@@ -16,6 +16,7 @@ public class NPCDirector : MonoBehaviour
 	private NPC _npcPrefab = null;
 
 	private EntityFilter _breakablesFilter;
+	private EntityFilter _npcsFilter;
 
 	public State DirectorState
 	{
@@ -65,8 +66,15 @@ public class NPCDirector : MonoBehaviour
 			_breakablesFilter = null;
 		}
 
+		if(_npcsFilter != null)
+		{
+			_npcsFilter.Clean(null, null);
+			_npcsFilter = null;
+		}
+
 		if(DirectorState == State.Active)
 		{
+			_npcsFilter = EntityFilter.Create(FilterRulesBuilder.SetupNoTagsBuilder().AddHasComponentRule<NPC>(true).Result(), null, null);
 			_breakablesFilter = EntityFilter.Create(FilterRulesBuilder.SetupNoTagsBuilder().AddHasComponentRule<Breakable>(true).Result(), OnTrackedBreakable, OnUntrackedBreakable);
 		}
 	}
@@ -85,22 +93,30 @@ public class NPCDirector : MonoBehaviour
 	{
 		if (newState == Breakable.State.Broken)
 		{
-			NPC callingNPC = null;
-			NPC[] npcs = NPCCommunicator.Instance.GetNPCs(x => x.NPCState == NPC.State.Idle);
-			Array.Sort(npcs, (a, b) => (int)(a.CalculateLengthPathToTarget(breakable.GetNavMeshOrigin()) - b.CalculateLengthPathToTarget(breakable.GetNavMeshOrigin())));
+			Entity callingNPCEntity = null;
+			Entity[] npcEntities = _npcsFilter.GetAll
+				(x => x.GetEntityComponent<NPC>().NPCState == NPC.State.Idle, 
+				(a, b) =>
+				{
+					NPC aNPC = a.GetEntityComponent<NPC>();
+					NPC bNPC = b.GetEntityComponent<NPC>();
+					return (int)(aNPC.CalculateLengthPathToTarget(breakable.GetNavMeshOrigin()) - bNPC.CalculateLengthPathToTarget(breakable.GetNavMeshOrigin()));
+				}
+			);
 
-			if(npcs.Length > 1)
+			if(npcEntities.Length > 1)
 			{
-				callingNPC = npcs[Mathf.FloorToInt(npcs.Length / 2f)];
-			}
-			else if(npcs.Length == 1)
-			{
-				callingNPC = npcs[0];
+				callingNPCEntity = npcEntities[Mathf.FloorToInt(npcEntities.Length / 2f)];
 			}
 
-			if (callingNPC != null)
+			else if(npcEntities.Length == 1)
 			{
-				callingNPC.CallNPCToBreakable(breakable);
+				callingNPCEntity = npcEntities[0];
+			}
+
+			if (callingNPCEntity != null)
+			{
+				callingNPCEntity.GetEntityComponent<NPC>().CallNPCToBreakable(breakable);
 			}
 		}
 	}

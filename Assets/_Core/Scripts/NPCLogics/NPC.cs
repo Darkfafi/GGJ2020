@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent), typeof(AudioSource))]
-public class NPC : MonoBehaviour
+public class NPC : EntityComponent
 {
     public delegate void NPCBreakableHandler(NPC npc, Breakable breakableSeen);
 	public delegate void NPCStateHandler(NPC npc, State state);
@@ -67,17 +67,12 @@ public class NPC : MonoBehaviour
 		}
 	}
 
-	protected void Awake()
+	protected override void Awake()
 	{
         myAnim = gameObject.GetComponent<Animator>();
 		_audioSource = gameObject.GetComponent<AudioSource>();
 		_navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
-		NPCCommunicator.Instance.RegisterNPC(this);
-	}
-
-	protected void OnDestroy()
-	{
-		NPCCommunicator.Instance.UnregisterNPC(this);
+		base.Awake();
 	}
 
 	public void AssignToCheckpoint(Checkpoint checkpoint, bool setToCheckpointPos = true)
