@@ -9,7 +9,7 @@ public class RepairGameMode : BaseGameMode<RepairModeSettings>
 	[SerializeField]
 	private NPCDirector _npcDirector = null;
 
-	private EntityFilter _playerEntityFilter;
+	private EntityFilter _repairersEntityFilter;
 
 	public int RepairCount
 	{
@@ -27,7 +27,7 @@ public class RepairGameMode : BaseGameMode<RepairModeSettings>
 									.AddHasComponentRule<RepairTarget>(true)
 									.Result();
 
-		_playerEntityFilter = EntityFilter.Create(filterRules, ListenToRepair, UnlistenFromRepair);
+		_repairersEntityFilter = EntityFilter.Create(filterRules, ListenToRepair, UnlistenFromRepair);
 
 		// Setup
 		RepairCount = 0;
@@ -41,8 +41,8 @@ public class RepairGameMode : BaseGameMode<RepairModeSettings>
 
 	protected override void StopMode()
 	{
-		_playerEntityFilter.Clean(ListenToRepair, UnlistenFromRepair);
-		_playerEntityFilter = null;
+		_repairersEntityFilter.Clean(ListenToRepair, UnlistenFromRepair);
+		_repairersEntityFilter = null;
 
 		NPCCommunicator.Instance.NPCSeenBrokenBreakableEvent -= OnNPCSeenBrokenBreakableEvent;
 		_npcDirector.SetDirectorState(NPCDirector.State.Deactive);
