@@ -28,10 +28,7 @@ public class RepairGameMode : BaseGameMode<RepairModeSettings>
 		FilterRules.AddComponentToConstruct<PlayerMovement>(true);
 		FilterRules.CloseConstruct(out FilterRules filterRules);
 
-		_playerEntityFilter = EntityFilter.Create(filterRules);
-		_playerEntityFilter.TrackedEvent += ListenToRepair;
-		_playerEntityFilter.UntrackedEvent += UnlistenFromRepair;
-		_playerEntityFilter.ForEach(x => ListenToRepair(x));
+		_playerEntityFilter = EntityFilter.Create(filterRules, ListenToRepair, UnlistenFromRepair);
 
 		// Setup
 		RepairCount = 0;
@@ -45,11 +42,7 @@ public class RepairGameMode : BaseGameMode<RepairModeSettings>
 
 	protected override void StopMode()
 	{
-		_playerEntityFilter.TrackedEvent -= ListenToRepair;
-		_playerEntityFilter.UntrackedEvent -= UnlistenFromRepair;
-		_playerEntityFilter.ForEach(x => UnlistenFromRepair(x));
-
-		_playerEntityFilter.Clean();
+		_playerEntityFilter.Clean(ListenToRepair, UnlistenFromRepair);
 		_playerEntityFilter = null;
 
 		NPCCommunicator.Instance.NPCSeenBrokenBreakableEvent -= OnNPCSeenBrokenBreakableEvent;

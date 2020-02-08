@@ -1,7 +1,10 @@
 ﻿using System;
 
-public class EntityTracker : EntitiesHolder, IComponentLifecycle, IEntityLifecycle
+public sealed class EntityTracker : EntitiesHolder, IComponentLifecycle, IEntityLifecycle
 {
+	public event TrackHandler TrackedEvent;
+	public event TrackHandler UntrackedEvent;
+
 	// Entity
 	public event Action<Entity, string> TagAddedEvent;
 	public event Action<Entity, string> TagRemovedEvent;
@@ -28,6 +31,11 @@ public class EntityTracker : EntitiesHolder, IComponentLifecycle, IEntityLifecyc
 	}
 
 	private static EntityTracker _instance = null;
+
+	private EntityTracker()
+	{
+		ListenToTrack(FireTrackedEvent, FireUntrackedEvent);
+	}
 
 	public void RegisterEntity(Entity entity)
 	{
@@ -59,6 +67,30 @@ public class EntityTracker : EntitiesHolder, IComponentLifecycle, IEntityLifecyc
 			entity.EntityCreatedEvent -= EntityCreatedEvent;
 			entity.EntityDestroyEvent -= EntityDestroyEvent;
 			UnityEngine.Object.Destroy(entity.gameObject);
+		}
+	}
+
+	protected override void Clean()
+	{
+		base.Clean();
+		UnlistenFromTrack(FireTrackedEvent, FireUntrackedEvent);
+		TrackedEvent = null;
+		UntrackedEvent = null;
+	}
+
+	private void FireTrackedEvent(Entity entity)
+	{
+		if (TrackedEvent != null)
+		{
+			TrackedEvent(entity);
+		}
+	}
+
+	private void FireUntrackedEvent(Entity entity)
+	{
+		if (UntrackedEvent != null)
+		{
+			UntrackedEvent(entity);
 		}
 	}
 }

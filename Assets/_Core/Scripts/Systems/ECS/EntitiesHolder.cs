@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 public abstract class EntitiesHolder
 {
-	public event Action<Entity> TrackedEvent;
-	public event Action<Entity> UntrackedEvent;
+	public delegate void TrackHandler(Entity entity);
+	private TrackHandler _trackedCallbacks;
+	private TrackHandler _untrackedCallbacks;
 
 	private List<Entity> _entities = new List<Entity>();
 
@@ -105,7 +106,33 @@ public abstract class EntitiesHolder
 		return _entities.Contains(model);
 	}
 
-	public virtual void Clean()
+	protected void ListenToTrack(TrackHandler trackedCallback, TrackHandler untrackedCallback)
+	{
+		if (trackedCallback != null)
+		{
+			_trackedCallbacks += trackedCallback;
+		}
+
+		if (untrackedCallback != null)
+		{
+			_untrackedCallbacks += untrackedCallback;
+		}
+	}
+
+	protected void UnlistenFromTrack(TrackHandler trackedCallback, TrackHandler untrackedCallback)
+	{
+		if (trackedCallback != null)
+		{
+			_trackedCallbacks -= trackedCallback;
+		}
+
+		if (untrackedCallback != null)
+		{
+			_untrackedCallbacks -= untrackedCallback;
+		}
+	}
+
+	protected virtual void Clean()
 	{
 		for (int i = _entities.Count - 1; i >= 0; i--)
 		{
@@ -125,9 +152,9 @@ public abstract class EntitiesHolder
 
 		_entities.Add(model);
 
-		if (TrackedEvent != null)
+		if (_trackedCallbacks != null)
 		{
-			TrackedEvent(model);
+			_trackedCallbacks(model);
 		}
 
 		return true;
@@ -140,9 +167,9 @@ public abstract class EntitiesHolder
 
 		_entities.Remove(model);
 
-		if (UntrackedEvent != null)
+		if (_untrackedCallbacks != null)
 		{
-			UntrackedEvent(model);
+			_untrackedCallbacks(model);
 		}
 
 		return true;
