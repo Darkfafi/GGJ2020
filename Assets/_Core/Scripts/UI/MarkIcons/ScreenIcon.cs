@@ -10,7 +10,7 @@ public class ScreenIcon : CanvasItem
 	private bool _inScreenIndication = true;
 
 	[SerializeField]
-	private Vector2 _offsetInScreenIndication = Vector2.zero;
+	private Vector3 _offsetWorldPosition = Vector3.zero;
 
 	[SerializeField]
 	private Vector2 _offsetOutScreenIndication = Vector2.zero;
@@ -21,11 +21,11 @@ public class ScreenIcon : CanvasItem
 	{
 		if (_currentTarget != null)
 		{
-			if(IsInViewport(_currentTarget.transform.position, out Vector3 viewportPos))
+			if(IsInViewport(_currentTarget.transform.position + _offsetWorldPosition, out Vector3 viewportPos))
 			{
 				if(_inScreenIndication)
 				{
-					RectTransform.anchoredPosition = ViewportToCanvasPosition(viewportPos) + _offsetInScreenIndication;
+					RectTransform.anchoredPosition = ViewportToCanvasPosition(viewportPos) ;
 					return;
 				}
 				else
