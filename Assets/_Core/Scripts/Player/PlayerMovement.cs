@@ -53,8 +53,11 @@ public class PlayerMovement : EntityComponent
                 Vector3 finalDelta = (xDelta + zDelta).normalized * Time.deltaTime * _movementSpeed;
                 finalDelta.y = 0f;
                 _navMeshAgent.Move(finalDelta);
-                Quaternion tRot = Quaternion.LookRotation(finalDelta, transform.up);
-                transform.rotation = Quaternion.Lerp(transform.rotation, tRot, 5f * Time.deltaTime);
+				if (finalDelta.magnitude > Mathf.Epsilon) 
+				{
+					Quaternion tRot = Quaternion.LookRotation(finalDelta, transform.up);
+					transform.rotation = Quaternion.Lerp(transform.rotation, tRot, 5f * Time.deltaTime);
+				}
             }
         }
         _myAnim.SetBool("IsWalking", isWalking);
