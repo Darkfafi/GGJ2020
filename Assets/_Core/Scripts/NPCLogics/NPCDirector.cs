@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class NPCDirector : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class NPCDirector : MonoBehaviour
 
 	[SerializeField]
 	private NPC _npcPrefab = null;
+
+	private EntityFilter _breakablesFilter;
 
 	public State DirectorState
 	{
@@ -55,15 +58,27 @@ public class NPCDirector : MonoBehaviour
 		}
 
 		DirectorState = state;
-		switch(DirectorState)
+
+		if (_breakablesFilter != null)
 		{
-			case State.Active:
-				BreakablesCommunicator.Instance.BreakableStateChangedEvent += OnBreakableStateChangedEvent;
-				break;
-			case State.Deactive:
-				BreakablesCommunicator.Instance.BreakableStateChangedEvent -= OnBreakableStateChangedEvent;
-				break;
+			_breakablesFilter.Clean(OnTrackedBreakable, OnUntrackedBreakable);
+			_breakablesFilter = null;
 		}
+
+		if(DirectorState == State.Active)
+		{
+			_breakablesFilter = EntityFilter.Create(FilterRulesBuilder.SetupNoTagsBuilder().AddHasComponentRule<Breakable>(true).Result(), OnTrackedBreakable, OnUntrackedBreakable);
+		}
+	}
+
+	private void OnTrackedBreakable(Entity entity)
+	{
+		entity.GetEntityComponent<Breakable>().StateChangedEvent += OnBreakableStateChangedEvent;
+	}
+
+	private void OnUntrackedBreakable(Entity entity)
+	{
+		entity.GetEntityComponent<Breakable>().StateChangedEvent -= OnBreakableStateChangedEvent;
 	}
 
 	private void OnBreakableStateChangedEvent(Breakable breakable, Breakable.State newState)
@@ -72,7 +87,7 @@ public class NPCDirector : MonoBehaviour
 		{
 			NPC callingNPC = null;
 			NPC[] npcs = NPCCommunicator.Instance.GetNPCs(x => x.NPCState == NPC.State.Idle);
-			System.Array.Sort(npcs, (a, b) => (int)(a.CalculateLengthPathToTarget(breakable.GetNavMeshOrigin()) - b.CalculateLengthPathToTarget(breakable.GetNavMeshOrigin())));
+			Array.Sort(npcs, (a, b) => (int)(a.CalculateLengthPathToTarget(breakable.GetNavMeshOrigin()) - b.CalculateLengthPathToTarget(breakable.GetNavMeshOrigin())));
 
 			if(npcs.Length > 1)
 			{

@@ -6,16 +6,31 @@ public class IndicatorCreator : MonoBehaviour
 	[SerializeField]
 	private ScreenIcon _indicatorPrefab = null;
 
+	private EntityFilter _breakablesFilter;
 	private Dictionary<Breakable, ScreenIcon> _indicators = new Dictionary<Breakable, ScreenIcon>();
 
 	protected void Awake()
 	{
-		BreakablesCommunicator.Instance.BreakableStateChangedEvent += OnBreakableStateChangedEvent;
+		FilterRules filterRules = FilterRulesBuilder.SetupNoTagsBuilder()
+			.AddHasComponentRule<Breakable>(true)
+			.Result();
+		_breakablesFilter = EntityFilter.Create(filterRules, OnBreakableTracked, OnBreakableUntracked);
 	}
 
 	protected void OnDestroy()
 	{
-		BreakablesCommunicator.Instance.BreakableStateChangedEvent -= OnBreakableStateChangedEvent;
+		_breakablesFilter.Clean(OnBreakableTracked, OnBreakableUntracked);
+		_breakablesFilter = null;
+	}
+
+	private void OnBreakableTracked(Entity entity)
+	{
+		entity.GetComponent<Breakable>().StateChangedEvent += OnBreakableStateChangedEvent;
+	}
+
+	private void OnBreakableUntracked(Entity entity)
+	{
+		entity.GetComponent<Breakable>().StateChangedEvent -= OnBreakableStateChangedEvent;
 	}
 
 	private void OnBreakableStateChangedEvent(Breakable breakable, Breakable.State newState)

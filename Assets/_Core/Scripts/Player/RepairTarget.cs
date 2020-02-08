@@ -20,6 +20,15 @@ public class RepairTarget : EntityComponent
 
 	private Breakable _closestBreakable;
 	private bool _setColor = false;
+	private EntityFilter _breakablesFilter;
+
+	protected override void Awake()
+	{
+		base.Awake();
+
+		FilterRules filterRules = FilterRulesBuilder.SetupNoTagsBuilder().AddHasComponentRule<Breakable>(true).Result();
+		_breakablesFilter = EntityFilter.Create(filterRules, null, null);
+	}
 
 	protected void Update()
 	{
@@ -74,12 +83,22 @@ public class RepairTarget : EntityComponent
 	{
 		transform.DOKill();
 		ClearClosestBreakableEntry();
+
+		_breakablesFilter.Clean(null, null);
+		_breakablesFilter = null;
+
 		base.OnDestroy();
 	}
 
 	private void RegisterClosestBreakable()
 	{
-		Breakable breakable = BreakablesCommunicator.Instance.GetClosestBrokenBreakableToLocation(transform.position);
+		Entity breakableEntity = _breakablesFilter.GetFirst((x) => x.GetEntityComponent<Breakable>().BreakState == Breakable.State.Broken, (a, b) => 
+		{
+			return Mathf.RoundToInt(Vector3.Distance(a.transform.position, transform.position) * 10f - Vector3.Distance(b.transform.position, transform.position) * 10f);
+		});
+
+		Breakable breakable = breakableEntity != null ? breakableEntity.GetEntityComponent<Breakable>() : null;
+
 		if(breakable != _closestBreakable && IsValidBreakableInRange(breakable))
 		{
 			ClearClosestBreakableEntry();
@@ -97,8 +116,8 @@ public class RepairTarget : EntityComponent
 		if (_closestBreakable != null)
 		{
 			_closestBreakable.GetComponent<BreakableEntity>().OutlineAnimator.ResetOutlineColor();
-			_setColor = false;
-			_closestBreakable = null;
 		}
+		_setColor = false;
+		_closestBreakable = null;
 	}
 }

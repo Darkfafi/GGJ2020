@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class GhostBehaviour : MonoBehaviour
 {
-    public Breakable[] breakableObjects;
 	public float waitTimeStart;
     public int waitTimeBetweenBreakingMin;
     public int waitTimeBetweenBreakingMax;
 
-    private int num;
     private Breakable theObject;
     private GhostMovement ghostMovement;
+	private EntityFilter _breakablesFilter;
 
     private Animator _anim;
     private AudioSource _audio;
@@ -26,7 +25,8 @@ public class GhostBehaviour : MonoBehaviour
         ghostMovement = GetComponent<GhostMovement>();
         _audio = GetComponent<AudioSource>();
         _anim = GetComponent<Animator>();
-    }
+		_breakablesFilter = EntityFilter.Create(FilterRulesBuilder.SetupNoTagsBuilder().AddHasComponentRule<Breakable>(true).Result(), null, null);
+	}
 
     private IEnumerator Start()
     {
@@ -38,16 +38,18 @@ public class GhostBehaviour : MonoBehaviour
 	{
 		transform.DOKill();
 		SetCurrentBreakingObject(null);
+		_breakablesFilter.Clean(null, null);
+		_breakablesFilter = null;
 	}
 
     public void FindRandomObject()
     {
 		transform.DOKill();
-		breakableObjects =  BreakablesCommunicator.Instance.GetBreakables(x => x.BreakState == Breakable.State.Unbroken);
-        if (breakableObjects.Length > 0)
+		Entity potentialTarget = _breakablesFilter.GetRandom(x => x.GetEntityComponent<Breakable>().BreakState == Breakable.State.Unbroken);
+
+		if (potentialTarget != null)
         {
-            num = UnityEngine.Random.Range(0, breakableObjects.Length);
-			SetCurrentBreakingObject(breakableObjects[num]);
+			SetCurrentBreakingObject(potentialTarget.GetEntityComponent<Breakable>());
             ghostMovement.MoveTowardsObject(theObject.gameObject);
             _audio.PlayOneShot(movingSFX);
             StartCoroutine(BreakObject());
